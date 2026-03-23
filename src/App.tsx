@@ -11,6 +11,7 @@ import Actualites from "./pages/Actualites";
 import Galerie from "./pages/Galerie";
 import Contact from "./pages/Contact";
 import Inscription from "./pages/Inscription";
+import CodeDev from "./pages/CodeDev";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
