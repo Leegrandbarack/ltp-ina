@@ -10,6 +10,7 @@ const navItems = [
   { label: 'Actualités', path: '/actualites' },
   { label: 'Galerie', path: '/galerie' },
   { label: 'Contact', path: '/contact' },
+  { label: 'Code Dev', path: '/code' },
 ];
 
 const Header = () => {

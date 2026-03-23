@@ -35,9 +35,9 @@ const Contact = () => {
               <h2 className="font-display text-2xl font-bold text-foreground mb-6">Informations de contact</h2>
               <div className="space-y-6">
                 {[
-                  { icon: MapPin, title: 'Adresse', text: 'Ina, Commune de Bembèrèkè, Borgou, Bénin' },
-                  { icon: Phone, title: 'Téléphone', text: '+229 97 00 00 00' },
-                  { icon: Mail, title: 'Email', text: 'contact@ltpina.bj' },
+                  { icon: MapPin, title: 'Adresse', text: 'Ina, Commune de Bembéréké, Borgou, Bénin' },
+                  { icon: Phone, title: 'Téléphone', text: '+229 XX XX XX XX' },
+                  { icon: Mail, title: 'Email', text: 'contact@ltp-ina.bj' },
                   { icon: Clock, title: 'Horaires', text: 'Lun - Ven : 7h30 - 17h00' },
                 ].map((item) => (
                   <div key={item.title} className="flex items-start gap-4">
