@@ -17,7 +17,7 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-primary-foreground/70 text-sm font-body leading-relaxed">
-              Former les leaders techniques de demain au cœur du Bénin. Excellence, discipline et innovation.
+              Former les talents techniques de demain au cœur du Bénin. Excellence, discipline et innovation.
             </p>
           </div>
 
@@ -44,9 +44,13 @@ const Footer = () => {
           <div>
             <h4 className="font-display font-bold text-lg mb-4">Filières</h4>
             <ul className="space-y-2 font-body text-sm">
-              <li className="text-primary-foreground/70">Installation & Maintenance Informatique</li>
+              <li className="text-primary-foreground/70">Secrétariat (G1)</li>
+              <li className="text-primary-foreground/70">Comptabilité (G2)</li>
+              <li className="text-primary-foreground/70">Commerce (G3)</li>
+              <li className="text-primary-foreground/70">Génie Civil (F4)</li>
+              <li className="text-primary-foreground/70">IMI</li>
+              <li className="text-primary-foreground/70">Mécanique Auto</li>
               <li className="text-primary-foreground/70">Électricité</li>
-              <li className="text-primary-foreground/70">Mécanique</li>
             </ul>
           </div>
 
@@ -55,15 +59,15 @@ const Footer = () => {
             <ul className="space-y-3 font-body text-sm">
               <li className="flex items-start gap-2 text-primary-foreground/70">
                 <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-accent" />
-                Ina, Commune de Bembèrèkè, Borgou, Bénin
+                Ina, Commune de Bembéréké, Borgou, Bénin
               </li>
               <li className="flex items-center gap-2 text-primary-foreground/70">
                 <Phone className="w-4 h-4 shrink-0 text-accent" />
-                +229 97 00 00 00
+                +229 XX XX XX XX
               </li>
               <li className="flex items-center gap-2 text-primary-foreground/70">
                 <Mail className="w-4 h-4 shrink-0 text-accent" />
-                contact@ltpina.bj
+                contact@ltp-ina.bj
               </li>
             </ul>
             <div className="flex gap-3 mt-4">

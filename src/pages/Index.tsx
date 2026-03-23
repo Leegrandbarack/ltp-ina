@@ -2,12 +2,10 @@ import { Link } from 'react-router-dom';
 import { Users, BookOpen, Award, GraduationCap, ArrowRight, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import heroImg from '@/assets/hero-students.jpg';
-import schoolImg from '@/assets/school-building.jpg';
 
 const stats = [
   { icon: Users, value: '850+', label: 'Élèves formés' },
-  { icon: BookOpen, value: '3', label: 'Filières techniques' },
+  { icon: BookOpen, value: '12+', label: 'Filières & formations' },
   { icon: Award, value: '45+', label: 'Enseignants qualifiés' },
   { icon: GraduationCap, value: '95%', label: 'Taux de réussite' },
 ];
@@ -20,12 +18,12 @@ const testimonials = [
   },
   {
     name: 'Fatouma B.',
-    role: 'Élève en Électricité',
-    text: "Les ateliers pratiques sont incroyables. On apprend en faisant, et les professeurs sont très disponibles pour nous accompagner.",
+    role: 'Élève en Comptabilité G2',
+    text: "Les cours sont bien structurés et les professeurs sont très disponibles. Je me sens prête pour le monde professionnel.",
   },
   {
     name: 'Ibrahim S.',
-    role: 'Ancien élève, Mécanique',
+    role: 'Ancien élève, Mécanique Auto',
     text: "Grâce à ma formation au LTP, j'ai décroché un emploi dans une grande entreprise mécanique à Cotonou dès ma sortie.",
   },
 ];
@@ -55,8 +53,8 @@ const Index = () => {
     <div ref={ref}>
       {/* Hero */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={heroImg} alt="Élèves du LTP Ina" className="w-full h-full object-cover" width={1920} height={1080} />
+        <div className="absolute inset-0 bg-primary">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c476?w=1920&q=80')] bg-cover bg-center opacity-30" />
           <div className="absolute inset-0 gradient-hero" />
         </div>
         <div className="relative container-custom px-4 sm:px-6 lg:px-8 py-20">
@@ -65,17 +63,17 @@ const Index = () => {
               Lycée Technique Professionnel d'Ina
             </p>
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-              Former les leaders techniques de <span className="text-gold">demain</span>
+              Former les talents techniques de <span className="text-gold">demain</span> au Bénin
             </h1>
             <p className="text-primary-foreground/80 font-body text-lg sm:text-xl mb-8 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-              Une formation d'excellence en informatique, électricité et mécanique au cœur du Bénin.
+              Plus de 12 filières d'excellence en secrétariat, comptabilité, génie civil, informatique, mécanique et plus encore.
             </p>
             <div className="flex flex-wrap gap-4 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
-              <Link to="/inscription">
-                <Button variant="hero">S'inscrire maintenant</Button>
+              <Link to="/filieres">
+                <Button variant="hero">Découvrir</Button>
               </Link>
-              <Link to="/a-propos">
-                <Button variant="heroOutline">Découvrir le lycée</Button>
+              <Link to="/inscription">
+                <Button variant="heroOutline">S'inscrire</Button>
               </Link>
             </div>
           </div>
@@ -111,7 +109,7 @@ const Index = () => {
                 Un lycée d'excellence au service du développement
               </h2>
               <p className="text-muted-foreground font-body leading-relaxed mb-6">
-                Fondé pour répondre aux besoins en formation technique du nord Bénin, le Lycée Technique Professionnel d'Ina forme chaque année des centaines de jeunes dans les métiers de l'informatique, de l'électricité et de la mécanique.
+                Situé à Ina, commune de Bembéréké dans le département du Borgou, le Lycée Technique Professionnel d'Ina forme chaque année des centaines de jeunes dans les métiers techniques et professionnels.
               </p>
               <p className="text-muted-foreground font-body leading-relaxed mb-8">
                 Notre approche pédagogique allie théorie solide et pratique intensive, préparant nos diplômés à intégrer le monde professionnel avec confiance.
@@ -123,14 +121,14 @@ const Index = () => {
               </Link>
             </div>
             <div className="animate-on-scroll relative" style={{ transitionDelay: '200ms' }}>
-              <img
-                src={schoolImg}
-                alt="Bâtiment du lycée"
-                className="rounded-2xl shadow-elevated w-full object-cover aspect-[4/3]"
-                loading="lazy"
-                width={1280}
-                height={720}
-              />
+              <div className="rounded-2xl shadow-elevated w-full aspect-[4/3] bg-muted overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80"
+                  alt="Bâtiment scolaire"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
               <div className="absolute -bottom-6 -left-6 bg-accent text-accent-foreground rounded-xl p-5 shadow-elevated hidden sm:block">
                 <p className="font-display text-2xl font-bold">20+</p>
                 <p className="font-body text-sm">Années d'excellence</p>

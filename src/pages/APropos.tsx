@@ -1,7 +1,5 @@
 import { Target, Eye, Shield, Lightbulb, Award } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import schoolImg from '@/assets/school-building.jpg';
-import directorImg from '@/assets/director.jpg';
 
 const values = [
   { icon: Shield, title: 'Discipline', desc: 'Rigueur et respect des règles pour un environnement propice à l\'apprentissage.' },
@@ -16,8 +14,8 @@ const APropos = () => {
     <div ref={ref}>
       {/* Hero */}
       <section className="relative py-24 sm:py-32 overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={schoolImg} alt="Lycée" className="w-full h-full object-cover" loading="lazy" width={1280} height={720} />
+        <div className="absolute inset-0 bg-primary">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1920&q=80')] bg-cover bg-center opacity-25" />
           <div className="absolute inset-0 gradient-hero" />
         </div>
         <div className="relative container-custom px-4 sm:px-6 lg:px-8 text-center">
@@ -35,7 +33,7 @@ const APropos = () => {
             <p className="text-accent font-body font-semibold text-sm uppercase tracking-widest mb-2">Notre histoire</p>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-6">Plus de 20 ans d'engagement</h2>
             <p className="text-muted-foreground font-body leading-relaxed mb-4">
-              Le Lycée Technique Professionnel d'Ina a été créé pour répondre au besoin croissant de formation technique dans la région du Borgou au nord du Bénin. Depuis sa fondation, l'établissement n'a cessé de se développer, formant des générations de techniciens qualifiés.
+              Le Lycée Technique Professionnel d'Ina a été créé pour répondre au besoin croissant de formation technique dans la commune de Bembéréké, département du Borgou, au nord du Bénin. Depuis sa fondation, l'établissement n'a cessé de se développer, formant des générations de techniciens qualifiés.
             </p>
             <p className="text-muted-foreground font-body leading-relaxed">
               Au fil des années, le lycée a su s'adapter aux évolutions technologiques en modernisant ses ateliers, en enrichissant ses programmes et en renforçant son corps enseignant. Aujourd'hui, le LTP d'Ina est reconnu comme l'un des meilleurs établissements techniques du nord Bénin.
@@ -94,19 +92,14 @@ const APropos = () => {
       {/* Director */}
       <section className="section-padding bg-muted">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-5 gap-10 items-center animate-on-scroll">
-            <div className="lg:col-span-2 flex justify-center">
-              <img src={directorImg} alt="Le Directeur" className="rounded-2xl shadow-elevated w-64 h-80 object-cover" loading="lazy" width={512} height={640} />
-            </div>
-            <div className="lg:col-span-3">
-              <p className="text-accent font-body font-semibold text-sm uppercase tracking-widest mb-2">Mot du Directeur</p>
-              <h2 className="font-display text-3xl font-bold text-foreground mb-6">Un message de notre Directeur</h2>
-              <blockquote className="text-muted-foreground font-body leading-relaxed italic border-l-4 border-accent pl-6">
-                "Au Lycée Technique Professionnel d'Ina, nous croyons que chaque élève porte en lui le potentiel de transformer sa communauté. Notre engagement est de fournir une éducation technique de qualité, ancrée dans la pratique, pour que nos diplômés soient immédiatement opérationnels sur le marché du travail. Nous invitons chaque jeune à nous rejoindre pour bâtir ensemble l'avenir du Bénin."
-              </blockquote>
-              <p className="mt-4 font-display font-bold text-foreground">M. le Directeur</p>
-              <p className="text-muted-foreground font-body text-sm">Directeur du LTP d'Ina</p>
-            </div>
+          <div className="max-w-3xl mx-auto animate-on-scroll">
+            <p className="text-accent font-body font-semibold text-sm uppercase tracking-widest mb-2">Mot du Directeur</p>
+            <h2 className="font-display text-3xl font-bold text-foreground mb-6">Un message de notre Directeur</h2>
+            <blockquote className="text-muted-foreground font-body leading-relaxed italic border-l-4 border-accent pl-6">
+              "Au Lycée Technique Professionnel d'Ina, nous croyons que chaque élève porte en lui le potentiel de transformer sa communauté. Notre engagement est de fournir une éducation technique de qualité, ancrée dans la pratique, pour que nos diplômés soient immédiatement opérationnels sur le marché du travail. Nous invitons chaque jeune à nous rejoindre pour bâtir ensemble l'avenir du Bénin."
+            </blockquote>
+            <p className="mt-4 font-display font-bold text-foreground">M. le Directeur</p>
+            <p className="text-muted-foreground font-body text-sm">Directeur du LTP d'Ina</p>
           </div>
         </div>
       </section>
