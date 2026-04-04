@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, GraduationCap, User } from 'lucide-react';
+import { Menu, X, GraduationCap, User, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const navItems = [
   { label: 'Accueil', path: '/' },
   { label: 'Présentation', path: '/a-propos' },
-  { label: 'Filières', path: '/filieres' },
+  { label: 'Formations', path: '/filieres' },
+  { label: 'Admissions', path: '/admissions' },
+  { label: 'Vie scolaire', path: '/vie-scolaire' },
   { label: 'Actualités', path: '/actualites' },
   { label: 'Galerie', path: '/galerie' },
-  { label: 'Inscription', path: '/inscription' },
   { label: 'Contact', path: '/contact' },
 ];
 
@@ -23,6 +24,10 @@ const Header = () => {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
 
   return (
     <header
@@ -47,12 +52,12 @@ const Header = () => {
           </div>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-0.5">
           {navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
-              className={`px-3.5 py-2 rounded-lg text-[13px] font-medium font-body transition-all duration-200 ${
+              className={`px-3 py-2 rounded-lg text-[13px] font-medium font-body transition-all duration-200 ${
                 location.pathname === item.path
                   ? scrolled
                     ? 'bg-primary text-primary-foreground'
@@ -68,17 +73,9 @@ const Header = () => {
         </nav>
 
         <div className="hidden lg:flex items-center gap-2">
-          <Link to="/inscription">
+          <Link to="/admissions">
             <Button variant="gold" size="sm">S'inscrire</Button>
           </Link>
-          <Button
-            variant={scrolled ? 'outline' : 'heroOutline'}
-            size="sm"
-            className="gap-1.5"
-          >
-            <User className="w-3.5 h-3.5" />
-            Espace élève
-          </Button>
         </div>
 
         <button
@@ -97,7 +94,6 @@ const Header = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                onClick={() => setIsOpen(false)}
                 className={`px-4 py-2.5 rounded-lg text-sm font-medium font-body transition-all ${
                   location.pathname === item.path
                     ? 'bg-primary text-primary-foreground'
@@ -108,13 +104,9 @@ const Header = () => {
               </Link>
             ))}
             <div className="flex flex-col gap-2 mt-2 pt-2 border-t border-border">
-              <Link to="/inscription" onClick={() => setIsOpen(false)}>
+              <Link to="/admissions">
                 <Button variant="gold" className="w-full">S'inscrire</Button>
               </Link>
-              <Button variant="outline" className="w-full gap-1.5">
-                <User className="w-3.5 h-3.5" />
-                Espace élève
-              </Button>
             </div>
           </nav>
         </div>
