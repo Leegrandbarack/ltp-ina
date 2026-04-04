@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle } from 'lucide-react';
+import { ArrowRight, CheckCircle, Target, Eye, Lightbulb } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const highlights = [
@@ -7,6 +7,12 @@ const highlights = [
   'Enseignants qualifiés et expérimentés',
   'Ateliers et laboratoires équipés',
   'Accompagnement vers l\'emploi',
+];
+
+const values = [
+  { icon: Target, title: 'Mission', text: 'Former des techniciens compétents et responsables' },
+  { icon: Eye, title: 'Vision', text: 'Devenir une référence de l\'enseignement technique au Bénin' },
+  { icon: Lightbulb, title: 'Valeurs', text: 'Excellence, discipline, innovation et intégrité' },
 ];
 
 export const AboutPreview = () => (
@@ -18,19 +24,24 @@ export const AboutPreview = () => (
             Présentation
           </span>
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-6 leading-tight">
-            Un lycée d'excellence au service du développement
+            Un lycée d'excellence au{' '}
+            <span className="text-primary">service du développement</span>
           </h2>
-          <p className="text-muted-foreground font-body leading-relaxed mb-6">
-            Situé à Ina, commune de Bembéréké dans le département du Borgou, le Lycée Technique Professionnel d'Ina forme chaque année des centaines de jeunes dans les métiers techniques et professionnels.
+          <p className="text-muted-foreground font-body leading-relaxed mb-8">
+            Situé à Ina, commune de Bembéréké dans le département du Borgou, le Lycée Technique Professionnel d'Ina forme chaque année des centaines de jeunes dans les métiers techniques et professionnels. Notre engagement : un enseignement de qualité, ancré dans la pratique.
           </p>
+
           <ul className="space-y-3 mb-8">
             {highlights.map((item) => (
               <li key={item} className="flex items-center gap-3 font-body text-sm text-foreground">
-                <CheckCircle className="w-4 h-4 text-accent shrink-0" />
+                <div className="w-5 h-5 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
+                  <CheckCircle className="w-3.5 h-3.5 text-accent" />
+                </div>
                 {item}
               </li>
             ))}
           </ul>
+
           <Link to="/a-propos">
             <Button variant="outline" className="group">
               En savoir plus
@@ -38,22 +49,29 @@ export const AboutPreview = () => (
             </Button>
           </Link>
         </div>
-        <div className="animate-on-scroll relative" style={{ transitionDelay: '150ms' }}>
-          <div className="rounded-2xl shadow-elevated w-full aspect-[4/3] bg-muted overflow-hidden">
+
+        <div className="animate-on-scroll space-y-4" style={{ transitionDelay: '150ms' }}>
+          <div className="rounded-2xl shadow-elevated w-full aspect-[4/3] bg-muted overflow-hidden relative">
             <img
               src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80"
-              alt="Bâtiment scolaire"
+              alt="Bâtiment du LTP INA"
               className="w-full h-full object-cover"
               loading="lazy"
             />
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/50 to-transparent p-6">
+              <p className="text-primary-foreground font-display font-bold text-lg">20+ années d'excellence</p>
+            </div>
           </div>
-          <div className="absolute -bottom-5 -left-5 bg-primary text-primary-foreground rounded-xl p-5 shadow-elevated hidden sm:block">
-            <p className="font-display text-3xl font-extrabold">20+</p>
-            <p className="font-body text-sm opacity-80">Années d'excellence</p>
-          </div>
-          <div className="absolute -top-4 -right-4 bg-gold text-gold-foreground rounded-xl p-4 shadow-elevated hidden sm:block">
-            <p className="font-display text-xl font-bold">A+</p>
-            <p className="font-body text-xs">Qualité</p>
+
+          {/* Mission/Vision/Values cards */}
+          <div className="grid grid-cols-3 gap-3">
+            {values.map((v) => (
+              <div key={v.title} className="bg-card rounded-xl p-4 shadow-soft text-center border border-border/50 hover:shadow-elevated transition-shadow">
+                <v.icon className="w-5 h-5 text-primary mx-auto mb-2" />
+                <p className="font-display font-bold text-xs text-foreground">{v.title}</p>
+                <p className="text-muted-foreground font-body text-[10px] mt-1 leading-tight">{v.text}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
