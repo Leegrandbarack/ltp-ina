@@ -10,8 +10,8 @@ import Filieres from "./pages/Filieres";
 import Actualites from "./pages/Actualites";
 import Galerie from "./pages/Galerie";
 import Contact from "./pages/Contact";
-import Inscription from "./pages/Inscription";
-import CodeDev from "./pages/CodeDev";
+import Admissions from "./pages/Admissions";
+import VieScolaire from "./pages/VieScolaire";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,8 +30,9 @@ const App = () => (
             <Route path="/actualites" element={<Actualites />} />
             <Route path="/galerie" element={<Galerie />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/inscription" element={<Inscription />} />
-            <Route path="/code" element={<CodeDev />} />
+            <Route path="/admissions" element={<Admissions />} />
+            <Route path="/inscription" element={<Admissions />} />
+            <Route path="/vie-scolaire" element={<VieScolaire />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
