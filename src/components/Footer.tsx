@@ -17,7 +17,7 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-primary-foreground/70 text-sm font-body leading-relaxed">
-              Établissement public de formation technique et professionnelle, situé à Ina dans la commune de Bembéréké, au Borgou.
+              Établissement public mixte de formation technique et professionnelle, sous tutelle du MESTFP. Situé à Ina, commune de Bembéréké, Borgou.
             </p>
           </div>
 
