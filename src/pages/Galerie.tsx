@@ -2,17 +2,19 @@ import { useState } from 'react';
 import { X } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
-const categories = ['Toutes', 'Classes', 'Événements', 'Ateliers'];
+const categories = ['Toutes', 'Infrastructures', 'Ateliers', 'Cérémonies', 'Vie scolaire'];
 
 const images = [
-  { src: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80', alt: 'Salle de classe', category: 'Classes' },
-  { src: 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&q=80', alt: 'Cérémonie de remise des diplômes', category: 'Événements' },
-  { src: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&q=80', alt: 'Atelier technique', category: 'Ateliers' },
-  { src: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&q=80', alt: 'Cour du lycée', category: 'Événements' },
-  { src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80', alt: 'Élèves en cours', category: 'Classes' },
-  { src: 'https://images.unsplash.com/photo-1562774053-701939374585?w=600&q=80', alt: 'Laboratoire informatique', category: 'Ateliers' },
-  { src: 'https://images.unsplash.com/photo-1588072432836-e10032774350?w=600&q=80', alt: 'Travaux pratiques', category: 'Ateliers' },
-  { src: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&q=80', alt: 'Vie scolaire', category: 'Événements' },
+  { src: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&q=80', alt: 'Bâtiment administratif du LTP INA', category: 'Infrastructures' },
+  { src: 'https://images.unsplash.com/photo-1562774053-701939374585?w=600&q=80', alt: 'Vue d\'ensemble du campus', category: 'Infrastructures' },
+  { src: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&q=80', alt: 'Atelier de mécanique', category: 'Ateliers' },
+  { src: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80', alt: 'Laboratoire informatique – filière IMI', category: 'Ateliers' },
+  { src: 'https://images.unsplash.com/photo-1588072432836-e10032774350?w=600&q=80', alt: 'Travaux pratiques en atelier', category: 'Ateliers' },
+  { src: 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&q=80', alt: 'Cérémonie de remise des diplômes 2024', category: 'Cérémonies' },
+  { src: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80', alt: 'Élèves en salle de cours', category: 'Vie scolaire' },
+  { src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80', alt: 'Journée portes ouvertes', category: 'Vie scolaire' },
+  { src: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&q=80', alt: 'Activités sportives', category: 'Vie scolaire' },
+  { src: 'https://images.unsplash.com/photo-1523050854058-8df90110c476?w=600&q=80', alt: 'Cérémonie de rentrée scolaire', category: 'Cérémonies' },
 ];
 
 const Galerie = () => {
@@ -28,7 +30,7 @@ const Galerie = () => {
         <div className="container-custom px-4 sm:px-6 lg:px-8">
           <h1 className="font-display text-4xl sm:text-5xl font-bold text-primary-foreground mb-4">Galerie</h1>
           <p className="text-primary-foreground/80 font-body text-lg max-w-2xl mx-auto">
-            Découvrez la vie au LTP Ina en images.
+            Le LTP INA en images : infrastructures, ateliers, cérémonies et vie quotidienne des élèves.
           </p>
         </div>
       </section>
@@ -65,8 +67,8 @@ const Galerie = () => {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/40 transition-colors duration-300 flex items-center justify-center">
-                  <p className="text-primary-foreground font-body text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-4 text-center">
+                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/40 transition-colors duration-300 flex items-end">
+                  <p className="text-primary-foreground font-body text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-3 pb-3">
                     {img.alt}
                   </p>
                 </div>
@@ -89,7 +91,7 @@ const Galerie = () => {
           </button>
           <img
             src={lightbox}
-            alt="Agrandie"
+            alt="Image agrandie"
             className="max-w-full max-h-[85vh] rounded-xl shadow-elevated object-contain"
             onClick={(e) => e.stopPropagation()}
           />
