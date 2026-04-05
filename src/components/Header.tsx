@@ -74,10 +74,19 @@ const Header = () => {
         </nav>
 
         <div className="hidden lg:flex items-center gap-2">
+          <button
+            onClick={() => setSearchOpen(true)}
+            className={`p-2 rounded-lg transition-colors ${scrolled ? 'text-foreground hover:bg-muted' : 'text-primary-foreground/80 hover:bg-primary-foreground/10'}`}
+            aria-label="Rechercher"
+          >
+            <Search className="w-4 h-4" />
+          </button>
           <Link to="/admissions">
             <Button variant="gold" size="sm">S'inscrire</Button>
           </Link>
         </div>
+
+        <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
 
         <button
           onClick={() => setIsOpen(!isOpen)}
