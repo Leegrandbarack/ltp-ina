@@ -12,15 +12,18 @@ export const CTASection = () => (
         <div className="relative grid lg:grid-cols-2 gap-10 items-center">
           <div>
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-primary-foreground mb-4">
-              Inscriptions ouvertes pour 2025-2026
+              Rejoignez le LTP INA
             </h2>
-            <p className="text-primary-foreground/70 font-body text-lg max-w-xl mb-6">
-              Les dossiers sont disponibles au secrétariat du lycée. Vous pouvez aussi déposer une demande de préinscription en ligne.
+            <p className="text-primary-foreground/70 font-body text-lg max-w-xl mb-3">
+              Les dossiers d'inscription pour l'année 2025-2026 sont disponibles au secrétariat de l'établissement. L'admission est ouverte aux garçons comme aux filles.
+            </p>
+            <p className="text-primary-foreground/50 font-body text-sm mb-6">
+              Vous pouvez aussi déposer une demande de préinscription en ligne depuis notre site.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link to="/admissions">
                 <Button variant="gold" size="lg" className="group">
-                  S'inscrire
+                  Déposer un dossier
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
@@ -37,7 +40,7 @@ export const CTASection = () => (
               </div>
               <div>
                 <p className="font-display font-bold text-primary-foreground text-sm">Secrétariat</p>
-                <p className="text-primary-foreground/60 font-body text-xs">+229 XX XX XX XX</p>
+                <p className="text-primary-foreground/60 font-body text-xs">+229 97 XX XX XX</p>
               </div>
             </div>
             <div className="bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/10 rounded-xl p-5 flex items-center gap-4">
@@ -46,7 +49,7 @@ export const CTASection = () => (
               </div>
               <div>
                 <p className="font-display font-bold text-primary-foreground text-sm">Email</p>
-                <p className="text-primary-foreground/60 font-body text-xs">contact@ltp-ina.bj</p>
+                <p className="text-primary-foreground/60 font-body text-xs">ltpina@education.gouv.bj</p>
               </div>
             </div>
           </div>

@@ -1,29 +1,28 @@
-import { Quote, Star } from 'lucide-react';
+import { Quote } from 'lucide-react';
 
 const testimonials = [
   {
     name: 'Abdoulaye K.',
-    role: 'Ancien élève, IMI',
-    text: "Le LTP d'Ina m'a donné les compétences techniques pour lancer ma propre entreprise de maintenance informatique. Une formation d'excellence !",
+    role: 'Ancien élève, filière IMI (promotion 2019)',
+    text: "Après mon diplôme, j'ai trouvé du travail dans un cyber café à Parakou, puis j'ai ouvert mon propre atelier de dépannage informatique. Ce que j'ai appris au LTP m'a vraiment servi.",
     initials: 'AK',
   },
   {
-    name: 'Fatouma B.',
-    role: 'Élève en Comptabilité G2',
-    text: "Les cours sont bien structurés et les professeurs sont très disponibles. Je me sens prête pour le monde professionnel.",
-    initials: 'FB',
+    name: 'Rachidatou M.',
+    role: 'Élève en Comptabilité G2, 2ème année',
+    text: "Je suis l'une des rares filles de ma classe, mais les professeurs nous traitent tous de la même façon. Les cours de comptabilité sont concrets et on fait beaucoup d'exercices pratiques.",
+    initials: 'RM',
   },
   {
-    name: 'Ibrahim S.',
-    role: 'Ancien élève, Mécanique Auto',
-    text: "Grâce à ma formation au LTP, j'ai décroché un emploi dans une grande entreprise mécanique à Cotonou dès ma sortie.",
-    initials: 'IS',
+    name: 'Moussa D.',
+    role: 'Ancien élève, Mécanique Automobile (promotion 2021)',
+    text: "La formation est surtout pratique. On passait beaucoup de temps en atelier. Aujourd'hui je travaille dans un garage à Bembéréké et je forme moi-même des apprentis.",
+    initials: 'MD',
   },
 ];
 
 export const TestimonialsSection = () => (
   <section className="section-padding bg-primary relative overflow-hidden">
-    {/* Decorative */}
     <div className="absolute top-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
     <div className="absolute bottom-0 right-0 w-72 h-72 bg-gold/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
 
@@ -33,10 +32,10 @@ export const TestimonialsSection = () => (
           Témoignages
         </span>
         <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-primary-foreground mb-3">
-          Ce que disent nos élèves
+          Ils sont passés par le LTP INA
         </h2>
         <p className="text-primary-foreground/50 font-body max-w-md mx-auto text-sm">
-          Découvrez les parcours inspirants de nos élèves et anciens élèves
+          Élèves et anciens élèves partagent leur expérience
         </p>
       </div>
 
@@ -47,11 +46,6 @@ export const TestimonialsSection = () => (
             className="bg-primary-foreground/[0.07] backdrop-blur-sm border border-primary-foreground/10 rounded-2xl p-7 animate-on-scroll hover:bg-primary-foreground/10 transition-colors duration-300"
             style={{ transitionDelay: `${i * 100}ms` }}
           >
-            <div className="flex gap-1 mb-5">
-              {[...Array(5)].map((_, j) => (
-                <Star key={j} className="w-4 h-4 fill-gold text-gold" />
-              ))}
-            </div>
             <Quote className="w-8 h-8 text-primary-foreground/10 mb-3" />
             <p className="text-primary-foreground/80 font-body leading-relaxed mb-6 text-sm">
               "{t.text}"

@@ -3,23 +3,23 @@ import { ArrowRight, Calendar, Tag } from 'lucide-react';
 
 const news = [
   {
-    title: 'Rentrée scolaire 2025-2026',
+    title: 'Rentrée scolaire 2025-2026 : accueil des nouveaux élèves',
     date: '15 Sept 2025',
-    excerpt: "Le LTP d'Ina accueille ses élèves pour une nouvelle année riche en apprentissages et innovations pédagogiques.",
-    tag: 'Événement',
+    excerpt: "La direction a accueilli les nouveaux inscrits en présence des parents d'élèves et du sous-préfet. Plus de 200 nouveaux élèves rejoignent l'établissement cette année.",
+    tag: 'Rentrée',
     image: 'https://images.unsplash.com/photo-1523050854058-8df90110c476?w=600&q=80',
   },
   {
-    title: 'Concours inter-lycées techniques',
+    title: 'Trois prix au concours national des lycées techniques',
     date: '20 Mars 2025',
-    excerpt: 'Nos élèves ont brillamment représenté le lycée au concours national des lycées techniques du Bénin.',
-    tag: 'Concours',
+    excerpt: "L'équipe du LTP INA s'est distinguée à Parakou : premier prix en mécanique auto, deuxième en électricité. Une fierté pour l'établissement.",
+    tag: 'Compétition',
     image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80',
   },
   {
-    title: 'Nouveau laboratoire informatique',
+    title: 'Inauguration du laboratoire informatique',
     date: '10 Janv 2025',
-    excerpt: "Inauguration d'un laboratoire équipé de 30 postes informatiques modernes pour la filière IMI.",
+    excerpt: "Grâce à un appui de la coopération technique, la filière IMI dispose désormais de 30 postes équipés et d'un accès internet.",
     tag: 'Infrastructure',
     image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80',
   },
@@ -34,7 +34,7 @@ export const NewsSection = () => (
             Actualités
           </span>
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground">
-            Dernières nouvelles
+            Informations récentes
           </h2>
         </div>
         <Link to="/actualites" className="hidden sm:inline-flex items-center gap-1.5 text-primary font-body font-semibold text-sm hover:gap-2.5 transition-all mt-4 sm:mt-0">

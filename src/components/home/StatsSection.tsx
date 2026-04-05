@@ -1,10 +1,10 @@
-import { Users, BookOpen, Award, GraduationCap, TrendingUp } from 'lucide-react';
+import { Users, BookOpen, Award, GraduationCap } from 'lucide-react';
 
 const stats = [
-  { icon: Users, value: '850+', label: 'Élèves formés', description: 'chaque année', accent: 'bg-primary/10 text-primary' },
-  { icon: BookOpen, value: '12+', label: 'Filières', description: 'techniques & pro', accent: 'bg-accent/10 text-accent' },
-  { icon: Award, value: '45+', label: 'Enseignants', description: 'qualifiés', accent: 'bg-gold/10 text-gold' },
-  { icon: GraduationCap, value: '95%', label: 'Taux de réussite', description: 'aux examens', accent: 'bg-primary/10 text-primary' },
+  { icon: Users, value: '800+', label: 'Élèves inscrits', description: 'garçons et filles', accent: 'bg-primary/10 text-primary' },
+  { icon: BookOpen, value: '12', label: 'Filières', description: 'techniques & pro', accent: 'bg-accent/10 text-accent' },
+  { icon: Award, value: '40+', label: 'Enseignants', description: 'et personnel', accent: 'bg-gold/10 text-gold' },
+  { icon: GraduationCap, value: '20+', label: 'Années', description: 'd\'expérience', accent: 'bg-primary/10 text-primary' },
 ];
 
 export const StatsSection = () => (

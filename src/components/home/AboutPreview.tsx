@@ -3,16 +3,16 @@ import { ArrowRight, CheckCircle, Target, Eye, Lightbulb } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const highlights = [
-  'Formation théorique et pratique intensive',
-  'Enseignants qualifiés et expérimentés',
-  'Ateliers et laboratoires équipés',
-  'Accompagnement vers l\'emploi',
+  'Établissement public sous tutelle du MESTFP',
+  'Formation mixte ouverte aux garçons et aux filles',
+  'Enseignement théorique et pratique en atelier',
+  'Accompagnement vers l\'insertion professionnelle',
 ];
 
 const values = [
-  { icon: Target, title: 'Mission', text: 'Former des techniciens compétents et responsables' },
-  { icon: Eye, title: 'Vision', text: 'Devenir une référence de l\'enseignement technique au Bénin' },
-  { icon: Lightbulb, title: 'Valeurs', text: 'Excellence, discipline, innovation et intégrité' },
+  { icon: Target, title: 'Mission', text: 'Former des techniciens qualifiés pour le marché local' },
+  { icon: Eye, title: 'Vision', text: 'Être un pôle technique de référence dans le Borgou' },
+  { icon: Lightbulb, title: 'Valeurs', text: 'Discipline, travail, solidarité et respect' },
 ];
 
 export const AboutPreview = () => (
@@ -24,11 +24,14 @@ export const AboutPreview = () => (
             Présentation
           </span>
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-6 leading-tight">
-            Un lycée d'excellence au{' '}
-            <span className="text-primary">service du développement</span>
+            Un lycée public au{' '}
+            <span className="text-primary">cœur du Borgou</span>
           </h2>
+          <p className="text-muted-foreground font-body leading-relaxed mb-4">
+            Le LTP INA est un établissement public d'enseignement technique et professionnel, situé à Ina dans la commune de Bembéréké. Il accueille chaque année des centaines de jeunes garçons et filles issus des communes environnantes.
+          </p>
           <p className="text-muted-foreground font-body leading-relaxed mb-8">
-            Situé à Ina, commune de Bembéréké dans le département du Borgou, le Lycée Technique Professionnel d'Ina forme chaque année des centaines de jeunes dans les métiers techniques et professionnels. Notre engagement : un enseignement de qualité, ancré dans la pratique.
+            L'établissement propose des formations concrètes, axées sur la pratique en atelier et adaptées aux besoins des entreprises locales et régionales.
           </p>
 
           <ul className="space-y-3 mb-8">
@@ -44,7 +47,7 @@ export const AboutPreview = () => (
 
           <Link to="/a-propos">
             <Button variant="outline" className="group">
-              En savoir plus
+              En savoir plus sur l'établissement
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
@@ -54,16 +57,15 @@ export const AboutPreview = () => (
           <div className="rounded-2xl shadow-elevated w-full aspect-[4/3] bg-muted overflow-hidden relative">
             <img
               src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80"
-              alt="Bâtiment du LTP INA"
+              alt="Bâtiment administratif du LTP INA"
               className="w-full h-full object-cover"
               loading="lazy"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/50 to-transparent p-6">
-              <p className="text-primary-foreground font-display font-bold text-lg">20+ années d'excellence</p>
+              <p className="text-primary-foreground font-display font-bold text-lg">Depuis 2001 à Ina</p>
             </div>
           </div>
 
-          {/* Mission/Vision/Values cards */}
           <div className="grid grid-cols-3 gap-3">
             {values.map((v) => (
               <div key={v.title} className="bg-card rounded-xl p-4 shadow-soft text-center border border-border/50 hover:shadow-elevated transition-shadow">
