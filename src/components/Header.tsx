@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, GraduationCap, User, ChevronDown } from 'lucide-react';
+import { Menu, X, GraduationCap, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import SearchDialog from './SearchDialog';
 
 const navItems = [
   { label: 'Accueil', path: '/' },
@@ -17,6 +18,7 @@ const navItems = [
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -73,10 +75,19 @@ const Header = () => {
         </nav>
 
         <div className="hidden lg:flex items-center gap-2">
+          <button
+            onClick={() => setSearchOpen(true)}
+            className={`p-2 rounded-lg transition-colors ${scrolled ? 'text-foreground hover:bg-muted' : 'text-primary-foreground/80 hover:bg-primary-foreground/10'}`}
+            aria-label="Rechercher"
+          >
+            <Search className="w-4 h-4" />
+          </button>
           <Link to="/admissions">
             <Button variant="gold" size="sm">S'inscrire</Button>
           </Link>
         </div>
+
+        <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
 
         <button
           onClick={() => setIsOpen(!isOpen)}
