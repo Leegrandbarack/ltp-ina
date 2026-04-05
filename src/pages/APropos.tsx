@@ -1,19 +1,19 @@
-import { Target, Eye, Shield, Lightbulb, Award, Users, Heart } from 'lucide-react';
+import { Target, Eye, Shield, Lightbulb, Award, Heart } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const values = [
-  { icon: Shield, title: 'Discipline', desc: 'Le respect des règles est au cœur de notre fonctionnement. C\'est la base d\'un apprentissage efficace.' },
-  { icon: Award, title: 'Excellence', desc: 'Nous poussons chaque élève à donner le meilleur de lui-même, dans les cours comme dans la pratique.' },
-  { icon: Lightbulb, title: 'Innovation', desc: 'Nos méthodes pédagogiques évoluent avec les réalités du terrain et les avancées technologiques.' },
-  { icon: Heart, title: 'Solidarité', desc: 'La vie communautaire au LTP favorise l\'entraide entre élèves et le sens du collectif.' },
+  { icon: Shield, title: 'Discipline', desc: 'Le respect des règles et des horaires est essentiel. C\'est ce qui permet de maintenir un cadre favorable à l\'apprentissage.' },
+  { icon: Award, title: 'Travail', desc: 'Nous encourageons l\'effort régulier. La réussite passe par un travail constant, en classe comme à l\'atelier.' },
+  { icon: Lightbulb, title: 'Ouverture', desc: 'Nos formations évoluent en fonction des réalités du marché. Nous restons attentifs aux besoins des entreprises locales.' },
+  { icon: Heart, title: 'Solidarité', desc: 'La vie en communauté au lycée développe l\'entraide. Les élèves apprennent à travailler ensemble et à se soutenir.' },
 ];
 
 const timeline = [
-  { year: '2001', event: 'Création du lycée sous l\'initiative du gouvernement béninois pour renforcer l\'offre de formation technique dans le nord du pays.' },
-  { year: '2005', event: 'Ouverture des premières filières industrielles : Génie Civil et Électricité, avec la construction de nouveaux ateliers.' },
-  { year: '2010', event: 'Inauguration du bâtiment administratif et création de la filière IMI pour répondre à la demande croissante en informatique.' },
-  { year: '2018', event: 'Réhabilitation des ateliers de mécanique et de menuiserie grâce au soutien de partenaires techniques et financiers.' },
-  { year: '2023', event: 'Équipement du laboratoire informatique avec 30 postes modernes et mise en place d\'une connexion internet pour les élèves.' },
+  { year: '2001', event: 'Ouverture du lycée avec trois filières initiales, dans le cadre de la politique de décentralisation de l\'offre de formation technique au Bénin.' },
+  { year: '2005', event: 'Ajout des filières Génie Civil et Électricité. Construction des premiers ateliers avec l\'appui du budget national.' },
+  { year: '2010', event: 'Création de la filière IMI (Informatique) suite à la demande croissante. Achèvement du bâtiment administratif.' },
+  { year: '2018', event: 'Réhabilitation des ateliers de mécanique et menuiserie grâce à un partenariat avec la coopération technique allemande.' },
+  { year: '2023', event: 'Équipement du laboratoire informatique : 30 postes, vidéoprojecteur et connexion internet pour la filière IMI.' },
 ];
 
 const APropos = () => {
@@ -30,7 +30,7 @@ const APropos = () => {
         <div className="relative container-custom px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="font-display text-4xl sm:text-5xl font-bold text-primary-foreground mb-4">Présentation de l'établissement</h1>
           <p className="text-primary-foreground/80 font-body text-lg max-w-2xl mx-auto">
-            Depuis plus de vingt ans, le LTP INA forme des techniciens qualifiés au service du développement du Bénin.
+            Un lycée public mixte au service de la formation technique dans le département du Borgou.
           </p>
         </div>
       </section>
@@ -43,13 +43,13 @@ const APropos = () => {
               <span className="inline-block text-accent font-body font-semibold text-xs uppercase tracking-[0.2em] mb-3">Notre histoire</span>
               <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-6">Un établissement ancré dans son territoire</h2>
               <p className="text-muted-foreground font-body leading-relaxed mb-4">
-                Le Lycée Technique Professionnel d'Ina a ouvert ses portes au début des années 2000 dans la commune de Bembéréké, département du Borgou. À l'époque, la zone manquait cruellement de centres de formation technique accessibles aux jeunes de la région.
+                Le Lycée Technique Professionnel d'Ina a été créé au début des années 2000 dans l'arrondissement d'Ina, commune de Bembéréké, département du Borgou. L'objectif était de rapprocher l'offre de formation technique des populations du nord du Bénin, qui devaient auparavant se déplacer jusqu'à Parakou ou Natitingou.
               </p>
               <p className="text-muted-foreground font-body leading-relaxed mb-4">
-                Partant de trois filières et d'une poignée d'enseignants, l'établissement a grandi progressivement. Des bâtiments ont été construits, des ateliers équipés, et le corps enseignant s'est renforcé au fil des années grâce à des recrutements ciblés et à la formation continue.
+                L'établissement a démarré modestement avec trois filières et une dizaine d'enseignants. Au fil des années, de nouveaux bâtiments ont été construits, les ateliers équipés, et l'offre de formation élargie pour répondre aux besoins du marché local.
               </p>
               <p className="text-muted-foreground font-body leading-relaxed">
-                Aujourd'hui, le LTP INA accueille plus de 800 élèves répartis dans 12 filières. Il est devenu un acteur incontournable de la formation professionnelle dans le nord du Bénin, reconnu par les entreprises locales et les institutions.
+                Aujourd'hui, le LTP INA accueille environ 800 élèves — garçons et filles — répartis dans 12 filières. L'établissement est placé sous la tutelle du Ministère des Enseignements Secondaire, Technique et de la Formation Professionnelle (MESTFP).
               </p>
             </div>
 
@@ -85,7 +85,7 @@ const APropos = () => {
               </div>
               <h3 className="font-display text-2xl font-bold text-foreground mb-4">Notre mission</h3>
               <p className="text-muted-foreground font-body leading-relaxed">
-                Offrir aux jeunes de Bembéréké et des environs une formation technique solide, qui leur donne les moyens de s'insérer dans le monde professionnel ou de poursuivre leurs études. Nous formons des techniciens capables de travailler de façon autonome, avec rigueur et conscience professionnelle.
+                Former des jeunes garçons et filles aux métiers techniques, en leur donnant les compétences pratiques nécessaires pour s'insérer dans le monde du travail ou créer leur propre activité. Nous mettons l'accent sur la pratique en atelier, la rigueur professionnelle et l'autonomie.
               </p>
             </div>
             <div className="bg-card rounded-xl p-8 shadow-soft border border-border/50 animate-on-scroll" style={{ transitionDelay: '150ms' }}>
@@ -94,7 +94,7 @@ const APropos = () => {
               </div>
               <h3 className="font-display text-2xl font-bold text-foreground mb-4">Notre vision</h3>
               <p className="text-muted-foreground font-body leading-relaxed">
-                Faire du LTP INA un pôle de formation technique reconnu au niveau national, où les élèves acquièrent des compétences concrètes valorisées par les employeurs. Nous voulons que chaque diplômé sorte avec un savoir-faire réel et une confiance en ses capacités.
+                Devenir un pôle de formation technique de référence dans le nord du Bénin, reconnu par les entreprises et les institutions pour la qualité de ses diplômés. Nous voulons que chaque élève quitte le LTP INA avec un métier concret entre les mains.
               </p>
             </div>
           </div>
@@ -127,23 +127,23 @@ const APropos = () => {
         <div className="container-custom max-w-3xl">
           <div className="text-center animate-on-scroll">
             <span className="inline-block text-gold font-body font-semibold text-xs uppercase tracking-[0.2em] mb-3">Mot du Directeur</span>
-            <h2 className="font-display text-3xl font-bold text-primary-foreground mb-8">Un message à nos élèves et à leurs familles</h2>
+            <h2 className="font-display text-3xl font-bold text-primary-foreground mb-8">Un message aux familles</h2>
             <div className="bg-primary-foreground/[0.07] backdrop-blur-sm border border-primary-foreground/10 rounded-2xl p-8 text-left">
               <p className="text-primary-foreground/80 font-body leading-relaxed mb-4">
                 Chers parents, chers élèves,
               </p>
               <p className="text-primary-foreground/80 font-body leading-relaxed mb-4">
-                Le choix d'un établissement de formation est une décision importante. Au LTP INA, nous en sommes conscients et nous nous efforçons chaque jour de mériter la confiance que vous nous accordez.
+                Choisir un établissement pour la formation de son enfant n'est jamais anodin. Au LTP INA, nous prenons cette responsabilité au sérieux. Notre objectif est simple : donner à chaque élève, garçon ou fille, un vrai métier entre les mains.
               </p>
               <p className="text-primary-foreground/80 font-body leading-relaxed mb-4">
-                Notre équipe pédagogique travaille avec dévouement pour offrir à chaque élève un encadrement de qualité, des cours théoriques solides et une pratique régulière en atelier. Nous croyons fermement qu'un métier bien appris est la meilleure garantie d'un avenir stable.
+                Nos enseignants, pour la plupart issus du terrain professionnel, s'investissent au quotidien pour transmettre des compétences concrètes. Les ateliers sont ouverts régulièrement, et nous veillons à ce que chaque élève bénéficie d'un encadrement sérieux.
               </p>
               <p className="text-primary-foreground/80 font-body leading-relaxed mb-6">
-                Je vous invite à découvrir notre établissement, à rencontrer nos enseignants et à constater par vous-mêmes l'environnement que nous offrons à vos enfants.
+                Nous savons que les conditions ne sont pas toujours faciles, mais nous faisons de notre mieux avec les moyens disponibles. Je vous invite à venir visiter notre établissement et à échanger avec nos équipes.
               </p>
               <div className="border-t border-primary-foreground/10 pt-4">
                 <p className="font-display font-bold text-primary-foreground">Le Directeur du LTP INA</p>
-                <p className="text-primary-foreground/50 font-body text-sm">Ina, Bembéréké – Borgou, Bénin</p>
+                <p className="text-primary-foreground/50 font-body text-sm">Ina, Commune de Bembéréké — Borgou, Bénin</p>
               </div>
             </div>
           </div>

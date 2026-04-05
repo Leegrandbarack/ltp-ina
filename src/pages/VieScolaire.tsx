@@ -1,4 +1,4 @@
-import { BookOpen, Clock, Shield, Users, Award, Dumbbell, Music, Palette } from 'lucide-react';
+import { BookOpen, Clock, Shield, Users, Award, Dumbbell, Music, Palette, BookMarked } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const horaires = [
@@ -7,19 +7,19 @@ const horaires = [
 ];
 
 const reglement = [
-  'Le port de la tenue réglementaire est obligatoire du lundi au vendredi.',
-  'Les retards répétés sont sanctionnés par un avertissement écrit adressé aux parents.',
-  'L\'utilisation du téléphone portable est interdite pendant les heures de cours.',
-  'Tout acte de violence ou d\'incivilité entraîne un passage devant le conseil de discipline.',
-  'Les absences doivent être justifiées par les parents ou tuteurs dans un délai de 48 heures.',
-  'Les élèves doivent respecter le matériel et les locaux de l\'établissement.',
+  'Le port de la tenue scolaire réglementaire est obligatoire du lundi au vendredi pour tous les élèves, garçons et filles.',
+  'Les retards répétés entraînent un avertissement écrit adressé aux parents ou au tuteur légal.',
+  'L\'utilisation du téléphone portable est strictement interdite pendant les heures de cours et en atelier.',
+  'Tout acte de violence, d\'intimidation ou de harcèlement est passible d\'un passage devant le conseil de discipline.',
+  'Les absences doivent être justifiées par les parents ou tuteurs dans un délai de 48 heures auprès du surveillant général.',
+  'Le matériel pédagogique et les locaux doivent être respectés. Toute dégradation sera facturée à la famille.',
 ];
 
 const activites = [
-  { icon: Dumbbell, title: 'Sport scolaire', desc: 'Football, handball et athlétisme. Le lycée participe chaque année aux compétitions scolaires de l\'OSEBS au niveau départemental.' },
-  { icon: Music, title: 'Troupe théâtrale', desc: 'Les élèves mettent en scène des pièces lors des fêtes scolaires et journées culturelles. Une activité qui développe la confiance et l\'expression.' },
-  { icon: Palette, title: 'Club environnement', desc: 'Sensibilisation au reboisement, gestion des déchets au sein du lycée et dans la communauté d\'Ina.' },
-  { icon: BookOpen, title: 'Soutien scolaire', desc: 'Des séances de rattrapage sont organisées les mercredis après-midi pour les élèves en difficulté, encadrés par des enseignants volontaires.' },
+  { icon: Dumbbell, title: 'Sport scolaire', desc: 'Football, handball et athlétisme pour les garçons et les filles. Le lycée participe aux compétitions de l\'OSEBS au niveau départemental.' },
+  { icon: Music, title: 'Troupe théâtrale', desc: 'Les élèves préparent des sketches et pièces pour les fêtes scolaires. Une activité ouverte à tous, qui aide à développer la confiance en soi.' },
+  { icon: Palette, title: 'Club environnement', desc: 'Actions de reboisement dans l\'enceinte du lycée, sensibilisation à la gestion des déchets et entretien des espaces verts.' },
+  { icon: BookMarked, title: 'Soutien scolaire', desc: 'Des séances de rattrapage sont organisées les mercredis après-midi pour les élèves en difficulté, avec des enseignants volontaires.' },
 ];
 
 const VieScolaire = () => {
@@ -35,7 +35,7 @@ const VieScolaire = () => {
         <div className="relative container-custom px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="font-display text-4xl sm:text-5xl font-bold text-primary-foreground mb-4">Vie scolaire</h1>
           <p className="text-primary-foreground/80 font-body text-lg max-w-2xl mx-auto">
-            Organisation des cours, règlement intérieur et activités : tout ce qu'il faut savoir sur le quotidien au LTP INA.
+            Organisation des cours, discipline et activités : le quotidien des élèves au LTP INA.
           </p>
         </div>
       </section>
@@ -48,7 +48,7 @@ const VieScolaire = () => {
               <span className="inline-block text-accent font-body font-semibold text-xs uppercase tracking-[0.2em] mb-3">Organisation</span>
               <h2 className="font-display text-3xl font-extrabold text-foreground mb-6">Horaires et rythme scolaire</h2>
               <p className="text-muted-foreground font-body leading-relaxed mb-6">
-                Les cours se déroulent du lundi au samedi matin. L'après-midi est consacré aux travaux pratiques en atelier, aux séances de rattrapage ou aux activités extrascolaires. Le rythme est adapté pour alterner entre théorie et pratique.
+                Les cours se déroulent du lundi au samedi matin. Les après-midi sont consacrés aux travaux pratiques en atelier, aux séances de rattrapage ou aux activités parascolaires. Ce rythme permet d'alterner entre la théorie en classe et la pratique sur le terrain.
               </p>
               <div className="bg-card rounded-xl border border-border/50 overflow-hidden">
                 <table className="w-full">
@@ -76,13 +76,13 @@ const VieScolaire = () => {
               <span className="inline-block text-accent font-body font-semibold text-xs uppercase tracking-[0.2em] mb-3">Encadrement</span>
               <h2 className="font-display text-3xl font-extrabold text-foreground mb-6">Organisation des classes</h2>
               <p className="text-muted-foreground font-body leading-relaxed mb-6">
-                Chaque classe est encadrée par un professeur principal qui assure le suivi pédagogique et disciplinaire des élèves. Les effectifs sont maintenus à un niveau raisonnable pour garantir un encadrement de qualité.
+                Chaque classe est suivie par un professeur principal qui assure le lien entre l'administration, les enseignants et les familles. Les effectifs varient selon les filières, mais l'encadrement reste une priorité.
               </p>
               <div className="space-y-4">
                 {[
-                  { icon: Users, label: '30 à 45 élèves par classe en moyenne' },
-                  { icon: Award, label: 'Un professeur principal par classe' },
-                  { icon: Clock, label: 'Conseils de classe chaque trimestre' },
+                  { icon: Users, label: '30 à 45 élèves par classe (garçons et filles)' },
+                  { icon: Award, label: 'Un professeur principal désigné par classe' },
+                  { icon: Clock, label: 'Conseils de classe organisés chaque trimestre' },
                   { icon: Shield, label: 'Surveillants généraux présents en permanence' },
                 ].map((item) => (
                   <div key={item.label} className="flex items-center gap-3 bg-card rounded-lg p-4 border border-border/50">
@@ -105,7 +105,7 @@ const VieScolaire = () => {
             <span className="inline-block text-accent font-body font-semibold text-xs uppercase tracking-[0.2em] mb-3">Discipline</span>
             <h2 className="font-display text-3xl font-extrabold text-foreground mb-3">Règlement intérieur</h2>
             <p className="text-muted-foreground font-body text-sm max-w-lg mx-auto">
-              Le respect du règlement intérieur est une condition essentielle pour le bon fonctionnement de l'établissement et la réussite de chaque élève.
+              Le respect du règlement intérieur est une condition essentielle au bon déroulement de la vie scolaire et à la réussite de chaque élève.
             </p>
           </div>
           <div className="bg-card rounded-xl p-6 sm:p-8 shadow-soft border border-border/50 animate-on-scroll">
@@ -130,7 +130,7 @@ const VieScolaire = () => {
             <span className="inline-block text-accent font-body font-semibold text-xs uppercase tracking-[0.2em] mb-3">Parascolaire</span>
             <h2 className="font-display text-3xl font-extrabold text-foreground mb-3">Activités extrascolaires</h2>
             <p className="text-muted-foreground font-body text-sm max-w-lg mx-auto">
-              Au-delà des cours, le LTP INA propose des activités qui favorisent l'épanouissement et le développement personnel des élèves.
+              En dehors des cours, le LTP INA propose des activités ouvertes à tous les élèves pour favoriser l'épanouissement personnel.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 gap-6">
