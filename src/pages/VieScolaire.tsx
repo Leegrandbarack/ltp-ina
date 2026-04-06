@@ -184,8 +184,8 @@ const VieScolaire = () => {
           <div className="grid md:grid-cols-2 gap-6 mb-12">
             <div className="bg-card rounded-xl p-6 border border-border/50 shadow-soft animate-on-scroll">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-9 h-9 rounded-lg bg-pink-100 flex items-center justify-center">
-                  <UserCheck className="w-4 h-4 text-pink-600" />
+                <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center">
+                  <UserCheck className="w-4 h-4 text-accent" />
                 </div>
                 <h3 className="font-display font-bold text-foreground">Internat filles</h3>
               </div>

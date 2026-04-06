@@ -13,6 +13,8 @@ import Contact from "./pages/Contact";
 import Admissions from "./pages/Admissions";
 import VieScolaire from "./pages/VieScolaire";
 import NotFound from "./pages/NotFound";
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -22,20 +24,23 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/a-propos" element={<APropos />} />
-            <Route path="/filieres" element={<Filieres />} />
-            <Route path="/actualites" element={<Actualites />} />
-            <Route path="/galerie" element={<Galerie />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/admissions" element={<Admissions />} />
-            <Route path="/inscription" element={<Admissions />} />
-            <Route path="/vie-scolaire" element={<VieScolaire />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Layout>
+        <Routes>
+          {/* Admin routes (no Layout) */}
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+
+          {/* Public routes */}
+          <Route path="/" element={<Layout><Index /></Layout>} />
+          <Route path="/a-propos" element={<Layout><APropos /></Layout>} />
+          <Route path="/filieres" element={<Layout><Filieres /></Layout>} />
+          <Route path="/actualites" element={<Layout><Actualites /></Layout>} />
+          <Route path="/galerie" element={<Layout><Galerie /></Layout>} />
+          <Route path="/contact" element={<Layout><Contact /></Layout>} />
+          <Route path="/admissions" element={<Layout><Admissions /></Layout>} />
+          <Route path="/inscription" element={<Layout><Admissions /></Layout>} />
+          <Route path="/vie-scolaire" element={<Layout><VieScolaire /></Layout>} />
+          <Route path="*" element={<Layout><NotFound /></Layout>} />
+        </Routes>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
