@@ -48,7 +48,7 @@ const AdminLogin = () => {
       }
 
       toast.success('Connexion réussie');
-      navigate('/admin/dashboard');
+      navigate(from);
     } catch {
       setError('Une erreur est survenue. Réessayez plus tard.');
     } finally {
