@@ -33,7 +33,7 @@ const App = () => (
           {/* Public routes */}
           <Route path="/" element={<Layout><Index /></Layout>} />
           <Route path="/a-propos" element={<Layout><APropos /></Layout>} />
-          <Route path="/filieres" element={<Layout><Filieres /></Layout>} />
+          <Route path="/filieres" element={<Layout><ProtectedRoute><Filieres /></ProtectedRoute></Layout>} />
           <Route path="/actualites" element={<Layout><Actualites /></Layout>} />
           <Route path="/galerie" element={<Layout><Galerie /></Layout>} />
           <Route path="/contact" element={<Layout><Contact /></Layout>} />
