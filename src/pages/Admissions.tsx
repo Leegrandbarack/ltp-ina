@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { GraduationCap, Send, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,11 +23,38 @@ const documents = [
 ];
 
 const faq = [
-  { q: 'Le lycée accepte-t-il les filles ?', a: 'Oui. Le LTP INA est un établissement public mixte. Les filles sont acceptées dans toutes les filières sans exception.' },
-  { q: 'Quel est l\'âge limite pour s\'inscrire ?', a: 'Les candidats doivent avoir entre 14 et 22 ans au moment de l\'inscription, selon la filière visée.' },
-  { q: 'Peut-on s\'inscrire en cours d\'année ?', a: 'En principe, les inscriptions se font avant la rentrée. Toutefois, des admissions tardives sont possibles dans la limite des places disponibles, après accord de la direction.' },
-  { q: 'Quel niveau scolaire est requis ?', a: 'Le BEPC est requis pour les séries BAC (G1, G2, G3) et les filières industrielles (F4, IMI). Pour les CAP, le niveau CM2 ou 3ème est accepté selon la filière.' },
-  { q: 'Y a-t-il un internat ?', a: 'Le LTP INA ne dispose pas encore d\'internat. Les élèves venus d\'autres communes trouvent généralement un logement dans le village d\'Ina, à proximité du lycée.' },
+  {
+    q: 'Quels sont les critères d\'admission au LTP INA ?',
+    a: 'L\'admission se fait sur étude de dossier. Pour les séries BAC (G1, G2, G3) et les filières industrielles (F4, IMI), le BEPC est exigé. Pour les formations CAP, le niveau CM2 ou 3ème est accepté selon la spécialité. La commission d\'admission tient compte des résultats scolaires et de la motivation du candidat.'
+  },
+  {
+    q: 'Quels documents faut-il pour s\'inscrire ?',
+    a: 'Il faut fournir un extrait d\'acte de naissance, les bulletins des deux dernières années, un certificat médical récent, 4 photos d\'identité et la pièce d\'identité du parent ou tuteur. Les frais de dossier s\'élèvent à 5 000 FCFA.'
+  },
+  {
+    q: 'Quand est-ce que les inscriptions sont ouvertes ?',
+    a: 'La période d\'inscription s\'étend généralement du 1er juillet au 30 septembre de chaque année. Après cette date, des inscriptions tardives restent possibles s\'il reste des places disponibles, mais elles nécessitent l\'accord de la direction.'
+  },
+  {
+    q: 'Le lycée accepte-t-il les filles et les garçons ?',
+    a: 'Oui, le LTP INA est un établissement public mixte. Les filles et les garçons sont admis dans toutes les filières sans distinction. L\'internat dispose de bâtiments séparés pour les filles et les garçons.'
+  },
+  {
+    q: 'Est-ce qu\'il y a un internat au lycée ?',
+    a: 'Oui, le LTP INA dispose d\'un internat organisé en deux niveaux : un premier niveau pour les élèves du CM2 à la 3ème avec un encadrement renforcé, et un second niveau pour les lycéens (à partir de la Seconde) avec plus d\'autonomie. Les internats filles et garçons sont séparés.'
+  },
+  {
+    q: 'Quelles filières sont proposées au LTP INA ?',
+    a: 'Le lycée propose des formations tertiaires (Secrétariat G1, Comptabilité G2, Commerce G3), des filières industrielles (Génie Civil F4, Informatique IMI) et des formations professionnelles courtes (Construction Bâtiment, Mécanique Auto, Électricité, Menuiserie, Maçonnerie, Opérateur Géomètre).'
+  },
+  {
+    q: 'Les élèves venant d\'autres communes peuvent-ils s\'inscrire ?',
+    a: 'Bien sûr. Le LTP INA accueille des élèves de tout le Bénin. Ceux qui viennent de loin peuvent être hébergés à l\'internat du lycée, sous réserve de places disponibles. Il faut en faire la demande lors de l\'inscription.'
+  },
+  {
+    q: 'Quel est le coût de la scolarité ?',
+    a: 'Le LTP INA étant un établissement public, les frais de scolarité sont fixés par l\'État. Ils comprennent les frais d\'inscription, la contribution à l\'APE (Association des Parents d\'Élèves) et les frais de TP (travaux pratiques) qui varient selon la filière. Le secrétariat peut fournir le détail exact.'
+  },
 ];
 
 const Admissions = () => {
@@ -88,7 +114,7 @@ const Admissions = () => {
         </div>
       </section>
 
-      {/* Documents + FAQ */}
+      {/* Documents */}
       <section className="section-padding bg-muted/50">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
