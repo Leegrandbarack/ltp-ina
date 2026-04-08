@@ -166,7 +166,7 @@ const AdminDashboard = () => {
     }
 
     if (editingId) {
-      const payload: Record<string, unknown> = {
+      const payload: { title: string; description: string | null; category: string; published: boolean; file_url?: string } = {
         title: formTitle.trim(),
         description: formDescription.trim() || null,
         category: formCategory,
