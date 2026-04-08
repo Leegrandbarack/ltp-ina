@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, GraduationCap, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SearchDialog from './SearchDialog';
@@ -20,9 +20,6 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
-  const clickCount = useRef(0);
-  const clickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -34,32 +31,6 @@ const Header = () => {
     setIsOpen(false);
   }, [location.pathname]);
 
-  // Keyboard shortcut: Ctrl+Alt+I
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.altKey && e.key.toLowerCase() === 'i') {
-        e.preventDefault();
-        navigate('/admin');
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [navigate]);
-
-  // Triple-click on logo
-  const handleLogoClick = useCallback(() => {
-    clickCount.current += 1;
-    if (clickTimer.current) clearTimeout(clickTimer.current);
-    if (clickCount.current >= 3) {
-      clickCount.current = 0;
-      navigate('/admin');
-      return;
-    }
-    clickTimer.current = setTimeout(() => {
-      clickCount.current = 0;
-    }, 600);
-  }, [navigate]);
-
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -69,7 +40,7 @@ const Header = () => {
       }`}
     >
       <div className="container-custom flex items-center justify-between h-16 sm:h-[72px] px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-3 group" onClick={(e) => { handleLogoClick(); }}>
+        <Link to="/" className="flex items-center gap-3 group">
           <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
             <GraduationCap className="w-5 h-5 text-primary-foreground" />
           </div>

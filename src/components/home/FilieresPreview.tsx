@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, FileText, Calculator, ShoppingCart, Building2, Monitor, Wrench, Hammer, MapPin, Zap, Settings, PenTool, Layers } from 'lucide-react';
+import { ArrowRight, FileText, Calculator, ShoppingCart, Building2, Monitor, Wrench, Hammer, Compass, Zap, PenTool, Car, BrickWall, Droplets } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const categories = [
@@ -10,23 +10,26 @@ const categories = [
       { icon: FileText, name: 'Secrétariat (G1)' },
       { icon: Calculator, name: 'Comptabilité (G2)' },
       { icon: ShoppingCart, name: 'Commerce (G3)' },
+      { icon: Building2, name: 'TEB' },
+      { icon: Zap, name: 'Électrotechnique (F3)' },
     ],
   },
   {
-    title: 'Industriel',
+    title: 'CAP',
     color: 'bg-accent',
     items: [
-      { icon: Building2, name: 'Génie Civil (F4)' },
-      { icon: Monitor, name: 'IMI' },
+      { icon: BrickWall, name: 'Construction Bâtiment (CB)' },
+      { icon: Car, name: 'Mécanique Auto (MA)' },
+      { icon: Compass, name: 'Opérateur-Géomètre (OG)' },
+      { icon: BrickWall, name: 'Gros Œuvre (RGO)' },
     ],
   },
   {
-    title: 'CAP / DTM',
+    title: 'Spécifiques',
     color: 'bg-gold',
     items: [
-      { icon: Hammer, name: 'Construction Bâtiment' },
-      { icon: Wrench, name: 'Mécanique Auto' },
-      { icon: MapPin, name: 'Opérateur Géomètre' },
+      { icon: Monitor, name: 'IMI – Informatique' },
+      { icon: Droplets, name: 'Eau & Assainissement' },
     ],
   },
   {
@@ -34,9 +37,9 @@ const categories = [
     color: 'bg-primary',
     items: [
       { icon: Zap, name: 'Électricité' },
-      { icon: Settings, name: 'Mécanique' },
+      { icon: Wrench, name: 'Mécanique' },
       { icon: PenTool, name: 'Menuiserie' },
-      { icon: Layers, name: 'Maçonnerie' },
+      { icon: Hammer, name: 'Maçonnerie' },
     ],
   },
 ];
@@ -49,7 +52,7 @@ export const FilieresPreview = () => (
           Nos formations
         </span>
         <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-3">
-          12+ filières d'excellence
+          15+ filières d'excellence
         </h2>
         <p className="text-muted-foreground font-body max-w-lg mx-auto">
           Des formations adaptées aux besoins du marché de l'emploi béninois et de la sous-région.
@@ -64,7 +67,7 @@ export const FilieresPreview = () => (
               <h3 className="font-display font-bold text-lg text-foreground">{cat.title}</h3>
               <div className="flex-1 h-px bg-border" />
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
               {cat.items.map((f) => (
                 <div
                   key={f.name}

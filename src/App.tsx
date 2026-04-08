@@ -15,7 +15,7 @@ import VieScolaire from "./pages/VieScolaire";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
+
 
 const queryClient = new QueryClient();
 
@@ -33,7 +33,7 @@ const App = () => (
           {/* Public routes */}
           <Route path="/" element={<Layout><Index /></Layout>} />
           <Route path="/a-propos" element={<Layout><APropos /></Layout>} />
-          <Route path="/filieres" element={<Layout><ProtectedRoute><Filieres /></ProtectedRoute></Layout>} />
+          <Route path="/filieres" element={<Layout><Filieres /></Layout>} />
           <Route path="/actualites" element={<Layout><Actualites /></Layout>} />
           <Route path="/galerie" element={<Layout><Galerie /></Layout>} />
           <Route path="/contact" element={<Layout><Contact /></Layout>} />

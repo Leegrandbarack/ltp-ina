@@ -1,114 +1,139 @@
-import { Monitor, Zap, Wrench, Building2, Calculator, ShoppingCart, FileText, Compass, Car, Hammer, BrickWall, CheckCircle, ArrowRight } from 'lucide-react';
+import { Monitor, Zap, Wrench, Building2, Calculator, ShoppingCart, FileText, Compass, Car, Hammer, BrickWall, CheckCircle, ArrowRight, Droplets, PenTool } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const categories = [
   {
-    label: 'Séries BAC',
+    label: 'Filières menant au BAC',
+    description: 'Formations sanctionnées par le Baccalauréat Technique',
     color: 'bg-accent',
     filieres: [
       {
         icon: FileText,
         title: 'Secrétariat (G1)',
-        description: "Formation en techniques de secrétariat, gestion administrative, bureautique et communication professionnelle.",
+        description: "Techniques de secrétariat, gestion administrative, bureautique et communication professionnelle.",
         competences: ['Techniques de secrétariat', 'Bureautique avancée', 'Communication professionnelle', 'Gestion administrative'],
         debouches: ['Secrétaire de direction', 'Assistant(e) administratif(ve)', 'Agent de bureau'],
       },
       {
         icon: Calculator,
         title: 'Comptabilité (G2)',
-        description: "Formation en comptabilité générale, gestion financière, fiscalité et analyse des comptes d'entreprises.",
+        description: "Comptabilité générale, gestion financière, fiscalité et analyse des comptes d'entreprises.",
         competences: ['Comptabilité générale', 'Gestion financière', 'Fiscalité', 'Analyse comptable'],
-        debouches: ['Comptable', 'Aide-comptable', 'Gestionnaire financier', 'Agent fiscal'],
+        debouches: ['Comptable', 'Aide-comptable', 'Gestionnaire financier'],
       },
       {
         icon: ShoppingCart,
         title: 'Commerce (G3)',
-        description: "Formation aux techniques commerciales, marketing, gestion des stocks et négociation commerciale.",
+        description: "Techniques commerciales, marketing, gestion des stocks et négociation commerciale.",
         competences: ['Techniques de vente', 'Marketing', 'Gestion des stocks', 'Négociation commerciale'],
-        debouches: ['Commercial', 'Chef de rayon', 'Agent marketing', 'Entrepreneur'],
+        debouches: ['Commercial', 'Chef de rayon', 'Agent marketing'],
+      },
+      {
+        icon: Building2,
+        title: 'Technicien en Étude du Bâtiment (TEB)',
+        description: "Dessin technique du bâtiment, étude de structures, lecture et conception de plans architecturaux.",
+        competences: ['Dessin technique', 'Étude de structures', 'Conception de plans', 'Métré et devis'],
+        debouches: ['Dessinateur en bâtiment', 'Technicien d\'études', 'Métreur'],
+      },
+      {
+        icon: Zap,
+        title: 'Électrotechnique (F3)',
+        description: "Installations électriques domestiques et industrielles, automatisme et maintenance des équipements électriques.",
+        competences: ['Installations électriques', 'Automatisme', 'Maintenance électrique', 'Normes de sécurité'],
+        debouches: ['Électrotechnicien', 'Technicien de maintenance', 'Installateur industriel'],
       },
     ],
   },
   {
-    label: 'Séries Industrielles',
+    label: 'Filières menant au CAP',
+    description: 'Formations sanctionnées par le Certificat d\'Aptitude Professionnelle',
     color: 'bg-primary',
     filieres: [
       {
-        icon: Building2,
-        title: 'Génie Civil (F4)',
-        description: "Formation en construction, dessin technique du bâtiment, topographie et conduite de chantiers.",
-        competences: ['Dessin technique', 'Topographie', 'Conduite de chantiers', 'Calcul de structures'],
-        debouches: ['Conducteur de travaux', 'Dessinateur en bâtiment', 'Chef de chantier', 'Technicien génie civil'],
-      },
-      {
-        icon: Monitor,
-        title: 'IMI (Installation et Maintenance Informatique)',
-        description: "Formation en installation, configuration, maintenance et dépannage de systèmes informatiques et réseaux.",
-        competences: ['Installation de systèmes', 'Maintenance matérielle', 'Configuration réseaux', 'Dépannage informatique'],
-        debouches: ['Technicien informatique', 'Administrateur réseau', 'Support technique', 'Entrepreneur IT'],
-      },
-    ],
-  },
-  {
-    label: 'CAP / DTM',
-    color: 'bg-gold',
-    filieres: [
-      {
         icon: BrickWall,
-        title: 'Construction Bâtiment',
-        description: "Formation pratique en techniques de construction, lecture de plans et réalisation d'ouvrages de bâtiment.",
+        title: 'Construction en Bâtiment (CB)',
+        description: "Techniques de construction, lecture de plans, coffrage, ferraillage et réalisation d'ouvrages de bâtiment.",
         competences: ['Lecture de plans', 'Techniques de construction', 'Coffrage et ferraillage', 'Finitions'],
         debouches: ['Maçon qualifié', 'Chef d\'équipe BTP', 'Entrepreneur en bâtiment'],
       },
       {
         icon: Car,
-        title: 'Mécanique Automobile',
-        description: "Formation en diagnostic, entretien et réparation de véhicules automobiles, moteurs et systèmes embarqués.",
+        title: 'Mécanique Automobile (MA)',
+        description: "Diagnostic, entretien et réparation de véhicules automobiles, moteurs et systèmes mécaniques.",
         competences: ['Diagnostic moteur', 'Réparation automobile', 'Entretien préventif', 'Systèmes électriques auto'],
-        debouches: ['Mécanicien automobile', 'Chef d\'atelier', 'Entrepreneur en mécanique auto'],
+        debouches: ['Mécanicien automobile', 'Chef d\'atelier', 'Entrepreneur en mécanique'],
       },
       {
         icon: Compass,
-        title: 'Opérateur Géomètre',
-        description: "Formation en levés topographiques, bornage, cartographie et utilisation d'instruments de mesure.",
+        title: 'Opérateur-Géomètre (OG)',
+        description: "Levés topographiques, bornage, cartographie et utilisation d'instruments de mesure sur le terrain.",
         competences: ['Levés topographiques', 'Bornage', 'Cartographie', 'Instruments de mesure'],
         debouches: ['Géomètre', 'Technicien topographe', 'Agent cadastral'],
+      },
+      {
+        icon: BrickWall,
+        title: 'Réalisation de Gros Œuvre (RGO)',
+        description: "Construction de structures porteuses, fondations, murs, dalles et ouvrages en béton armé.",
+        competences: ['Fondations', 'Béton armé', 'Coffrage', 'Structures porteuses'],
+        debouches: ['Maçon gros œuvre', 'Chef de chantier', 'Conducteur de travaux'],
       },
     ],
   },
   {
-    label: 'Formations Techniques',
+    label: 'Filières spécifiques',
+    description: 'Formations professionnelles ne menant pas au CAP',
+    color: 'bg-gold',
+    filieres: [
+      {
+        icon: Monitor,
+        title: 'Installation et Maintenance en Informatique (IMI)',
+        description: "Installation, configuration, maintenance et dépannage de systèmes informatiques et réseaux locaux.",
+        competences: ['Installation de systèmes', 'Maintenance matérielle', 'Configuration réseaux', 'Dépannage informatique'],
+        debouches: ['Technicien informatique', 'Administrateur réseau', 'Support technique'],
+      },
+      {
+        icon: Droplets,
+        title: 'Eau et Assainissement (EA)',
+        description: "Adduction d'eau potable, assainissement des eaux usées, plomberie et gestion des réseaux hydrauliques.",
+        competences: ['Plomberie', 'Adduction d\'eau', 'Traitement des eaux', 'Réseaux hydrauliques'],
+        debouches: ['Plombier', 'Technicien en assainissement', 'Agent des eaux'],
+      },
+    ],
+  },
+  {
+    label: 'Formations Techniques complémentaires',
+    description: 'Ateliers de formation pratique',
     color: 'bg-accent',
     filieres: [
       {
         icon: Zap,
         title: 'Électricité',
-        description: "Formation en installations électriques domestiques et industrielles, normes de sécurité et énergies renouvelables.",
-        competences: ['Installations électriques', 'Normes de sécurité', 'Câblage industriel', 'Énergie solaire'],
-        debouches: ['Électricien bâtiment', 'Électricien industriel', 'Installateur solaire'],
+        description: "Installations électriques domestiques, câblage et normes de sécurité en vigueur.",
+        competences: ['Installations électriques', 'Normes de sécurité', 'Câblage', 'Énergie solaire'],
+        debouches: ['Électricien bâtiment', 'Installateur solaire'],
       },
       {
         icon: Wrench,
-        title: 'Mécanique',
-        description: "Formation en mécanique générale, usinage, soudure et maintenance d'équipements industriels.",
-        competences: ['Mécanique générale', 'Soudure', 'Usinage', 'Maintenance industrielle'],
+        title: 'Mécanique générale',
+        description: "Mécanique générale, usinage, soudure et maintenance d'équipements.",
+        competences: ['Mécanique générale', 'Soudure', 'Usinage', 'Maintenance'],
         debouches: ['Mécanicien industriel', 'Soudeur', 'Technicien de maintenance'],
       },
       {
-        icon: Hammer,
+        icon: PenTool,
         title: 'Menuiserie',
-        description: "Formation en travail du bois, fabrication de meubles, charpente et finitions bois.",
+        description: "Travail du bois, fabrication de meubles, charpente et finitions.",
         competences: ['Travail du bois', 'Fabrication de meubles', 'Charpente', 'Finitions'],
-        debouches: ['Menuisier', 'Ébéniste', 'Charpentier', 'Entrepreneur en menuiserie'],
+        debouches: ['Menuisier', 'Ébéniste', 'Charpentier'],
       },
       {
-        icon: BrickWall,
+        icon: Hammer,
         title: 'Maçonnerie',
-        description: "Formation en techniques de maçonnerie, enduits, carrelage et construction d'ouvrages en béton.",
+        description: "Techniques de maçonnerie, enduits, carrelage et ouvrages en béton.",
         competences: ['Maçonnerie traditionnelle', 'Enduits et crépis', 'Carrelage', 'Béton armé'],
-        debouches: ['Maçon qualifié', 'Carreleur', 'Chef d\'équipe BTP', 'Entrepreneur'],
+        debouches: ['Maçon qualifié', 'Carreleur', 'Chef d\'équipe BTP'],
       },
     ],
   },
@@ -123,7 +148,7 @@ const Filieres = () => {
         <div className="container-custom px-4 sm:px-6 lg:px-8">
           <h1 className="font-display text-4xl sm:text-5xl font-bold text-primary-foreground mb-4">Nos Filières</h1>
           <p className="text-primary-foreground/80 font-body text-lg max-w-2xl mx-auto">
-            Des formations diversifiées pour des carrières techniques et professionnelles prometteuses.
+            Le LTP INA propose des formations diversifiées adaptées aux besoins du marché de l'emploi au Bénin et dans la sous-région.
           </p>
         </div>
       </section>
@@ -131,10 +156,11 @@ const Filieres = () => {
       {categories.map((cat) => (
         <section key={cat.label} className="section-padding">
           <div className="container-custom">
-            <div className="flex items-center gap-3 mb-10 animate-on-scroll">
+            <div className="flex items-center gap-3 mb-2 animate-on-scroll">
               <div className={`w-1.5 h-8 rounded-full ${cat.color}`} />
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground">{cat.label}</h2>
             </div>
+            <p className="text-muted-foreground font-body text-sm mb-10 ml-5 animate-on-scroll">{cat.description}</p>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {cat.filieres.map((f, i) => (
@@ -163,7 +189,7 @@ const Filieres = () => {
                       </ul>
                     </div>
 
-                    <div className="mb-5">
+                    <div>
                       <h4 className="font-display font-semibold text-foreground text-sm mb-2">Débouchés</h4>
                       <ul className="space-y-1.5">
                         {f.debouches.map((d) => (
@@ -173,10 +199,6 @@ const Filieres = () => {
                         ))}
                       </ul>
                     </div>
-
-                    <Link to="/inscription">
-                      <Button variant="outline" size="sm" className="w-full">S'inscrire</Button>
-                    </Link>
                   </div>
                 </div>
               ))}
@@ -184,6 +206,18 @@ const Filieres = () => {
           </div>
         </section>
       ))}
+
+      <section className="section-padding bg-muted/50">
+        <div className="container-custom text-center animate-on-scroll">
+          <h2 className="font-display text-2xl font-bold text-foreground mb-4">Intéressé par nos formations ?</h2>
+          <p className="text-muted-foreground font-body mb-6 max-w-lg mx-auto">
+            Consultez les conditions d'admission et déposez votre dossier de préinscription en ligne.
+          </p>
+          <Link to="/admissions">
+            <Button variant="default" size="lg">Voir les admissions</Button>
+          </Link>
+        </div>
+      </section>
     </div>
   );
 };
