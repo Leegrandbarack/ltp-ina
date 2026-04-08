@@ -1,13 +1,13 @@
-import { Monitor, Zap, Wrench, Building2, Calculator, ShoppingCart, FileText, Compass, Car, Hammer, BrickWall, CheckCircle, ArrowRight, Droplets, PenTool } from 'lucide-react';
+import { Monitor, Zap, Wrench, Building2, Calculator, ShoppingCart, FileText, Compass, Car, BrickWall, CheckCircle, ArrowRight, Droplets, PenTool } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const categories = [
   {
-    label: 'Filières menant au BAC',
-    description: 'Formations sanctionnées par le Baccalauréat Technique',
-    color: 'bg-accent',
+    label: 'Filières menant au CAP',
+    description: 'Formations sanctionnées par le Certificat d\'Aptitude Professionnelle',
+    color: 'bg-primary',
     filieres: [
       {
         icon: FileText,
@@ -31,26 +31,12 @@ const categories = [
         debouches: ['Commercial', 'Chef de rayon', 'Agent marketing'],
       },
       {
-        icon: Building2,
-        title: 'Technicien en Étude du Bâtiment (TEB)',
-        description: "Dessin technique du bâtiment, étude de structures, lecture et conception de plans architecturaux.",
-        competences: ['Dessin technique', 'Étude de structures', 'Conception de plans', 'Métré et devis'],
-        debouches: ['Dessinateur en bâtiment', 'Technicien d\'études', 'Métreur'],
-      },
-      {
         icon: Zap,
         title: 'Électrotechnique (F3)',
         description: "Installations électriques domestiques et industrielles, automatisme et maintenance des équipements électriques.",
         competences: ['Installations électriques', 'Automatisme', 'Maintenance électrique', 'Normes de sécurité'],
         debouches: ['Électrotechnicien', 'Technicien de maintenance', 'Installateur industriel'],
       },
-    ],
-  },
-  {
-    label: 'Filières menant au CAP',
-    description: 'Formations sanctionnées par le Certificat d\'Aptitude Professionnelle',
-    color: 'bg-primary',
-    filieres: [
       {
         icon: BrickWall,
         title: 'Construction en Bâtiment (CB)',
@@ -73,17 +59,24 @@ const categories = [
         debouches: ['Géomètre', 'Technicien topographe', 'Agent cadastral'],
       },
       {
-        icon: BrickWall,
-        title: 'Réalisation de Gros Œuvre (RGO)',
-        description: "Construction de structures porteuses, fondations, murs, dalles et ouvrages en béton armé.",
-        competences: ['Fondations', 'Béton armé', 'Coffrage', 'Structures porteuses'],
-        debouches: ['Maçon gros œuvre', 'Chef de chantier', 'Conducteur de travaux'],
+        icon: PenTool,
+        title: 'Menuiserie',
+        description: "Travail du bois, fabrication de meubles, charpente et finitions.",
+        competences: ['Travail du bois', 'Fabrication de meubles', 'Charpente', 'Finitions'],
+        debouches: ['Menuisier', 'Ébéniste', 'Charpentier'],
+      },
+      {
+        icon: Wrench,
+        title: 'Mécanique générale',
+        description: "Mécanique générale, usinage, soudure et maintenance d'équipements.",
+        competences: ['Mécanique générale', 'Soudure', 'Usinage', 'Maintenance'],
+        debouches: ['Mécanicien industriel', 'Soudeur', 'Technicien de maintenance'],
       },
     ],
   },
   {
     label: 'Filières spécifiques',
-    description: 'Formations professionnelles ne menant pas au CAP',
+    description: 'Formations professionnelles avec parcours distinct (ne menant pas au CAP)',
     color: 'bg-gold',
     filieres: [
       {
@@ -100,40 +93,19 @@ const categories = [
         competences: ['Plomberie', 'Adduction d\'eau', 'Traitement des eaux', 'Réseaux hydrauliques'],
         debouches: ['Plombier', 'Technicien en assainissement', 'Agent des eaux'],
       },
-    ],
-  },
-  {
-    label: 'Formations Techniques complémentaires',
-    description: 'Ateliers de formation pratique',
-    color: 'bg-accent',
-    filieres: [
       {
-        icon: Zap,
-        title: 'Électricité',
-        description: "Installations électriques domestiques, câblage et normes de sécurité en vigueur.",
-        competences: ['Installations électriques', 'Normes de sécurité', 'Câblage', 'Énergie solaire'],
-        debouches: ['Électricien bâtiment', 'Installateur solaire'],
+        icon: Building2,
+        title: 'Technicien en Étude du Bâtiment (TEB)',
+        description: "Dessin technique du bâtiment, étude de structures, lecture et conception de plans architecturaux.",
+        competences: ['Dessin technique', 'Étude de structures', 'Conception de plans', 'Métré et devis'],
+        debouches: ['Dessinateur en bâtiment', 'Technicien d\'études', 'Métreur'],
       },
       {
-        icon: Wrench,
-        title: 'Mécanique générale',
-        description: "Mécanique générale, usinage, soudure et maintenance d'équipements.",
-        competences: ['Mécanique générale', 'Soudure', 'Usinage', 'Maintenance'],
-        debouches: ['Mécanicien industriel', 'Soudeur', 'Technicien de maintenance'],
-      },
-      {
-        icon: PenTool,
-        title: 'Menuiserie',
-        description: "Travail du bois, fabrication de meubles, charpente et finitions.",
-        competences: ['Travail du bois', 'Fabrication de meubles', 'Charpente', 'Finitions'],
-        debouches: ['Menuisier', 'Ébéniste', 'Charpentier'],
-      },
-      {
-        icon: Hammer,
-        title: 'Maçonnerie',
-        description: "Techniques de maçonnerie, enduits, carrelage et ouvrages en béton.",
-        competences: ['Maçonnerie traditionnelle', 'Enduits et crépis', 'Carrelage', 'Béton armé'],
-        debouches: ['Maçon qualifié', 'Carreleur', 'Chef d\'équipe BTP'],
+        icon: BrickWall,
+        title: 'Réalisation de Gros Œuvre (RGO)',
+        description: "Construction de structures porteuses, fondations, murs, dalles et ouvrages en béton armé.",
+        competences: ['Fondations', 'Béton armé', 'Coffrage', 'Structures porteuses'],
+        debouches: ['Maçon gros œuvre', 'Chef de chantier', 'Conducteur de travaux'],
       },
     ],
   },

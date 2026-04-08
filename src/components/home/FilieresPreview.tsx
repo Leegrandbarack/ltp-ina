@@ -1,45 +1,31 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, FileText, Calculator, ShoppingCart, Building2, Monitor, Wrench, Hammer, Compass, Zap, PenTool, Car, BrickWall, Droplets } from 'lucide-react';
+import { ArrowRight, FileText, Calculator, ShoppingCart, Building2, Monitor, Wrench, Compass, Zap, PenTool, Car, BrickWall, Droplets } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const categories = [
   {
-    title: 'BAC',
+    title: 'Filières CAP',
     color: 'bg-primary',
     items: [
       { icon: FileText, name: 'Secrétariat (G1)' },
       { icon: Calculator, name: 'Comptabilité (G2)' },
       { icon: ShoppingCart, name: 'Commerce (G3)' },
-      { icon: Building2, name: 'TEB' },
       { icon: Zap, name: 'Électrotechnique (F3)' },
-    ],
-  },
-  {
-    title: 'CAP',
-    color: 'bg-accent',
-    items: [
       { icon: BrickWall, name: 'Construction Bâtiment (CB)' },
       { icon: Car, name: 'Mécanique Auto (MA)' },
       { icon: Compass, name: 'Opérateur-Géomètre (OG)' },
-      { icon: BrickWall, name: 'Gros Œuvre (RGO)' },
+      { icon: PenTool, name: 'Menuiserie' },
+      { icon: Wrench, name: 'Mécanique générale' },
     ],
   },
   {
-    title: 'Spécifiques',
+    title: 'Filières spécifiques',
     color: 'bg-gold',
     items: [
       { icon: Monitor, name: 'IMI – Informatique' },
       { icon: Droplets, name: 'Eau & Assainissement' },
-    ],
-  },
-  {
-    title: 'Technique',
-    color: 'bg-primary',
-    items: [
-      { icon: Zap, name: 'Électricité' },
-      { icon: Wrench, name: 'Mécanique' },
-      { icon: PenTool, name: 'Menuiserie' },
-      { icon: Hammer, name: 'Maçonnerie' },
+      { icon: Building2, name: 'TEB – Étude Bâtiment' },
+      { icon: BrickWall, name: 'RGO – Gros Œuvre' },
     ],
   },
 ];
@@ -52,7 +38,7 @@ export const FilieresPreview = () => (
           Nos formations
         </span>
         <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-3">
-          15+ filières d'excellence
+          13 filières professionnelles
         </h2>
         <p className="text-muted-foreground font-body max-w-lg mx-auto">
           Des formations adaptées aux besoins du marché de l'emploi béninois et de la sous-région.
