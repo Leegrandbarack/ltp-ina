@@ -15,7 +15,7 @@ import VieScolaire from "./pages/VieScolaire";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
+
 
 const queryClient = new QueryClient();
 
