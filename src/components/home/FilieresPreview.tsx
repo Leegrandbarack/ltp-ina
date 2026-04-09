@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, FileText, Calculator, ShoppingCart, Building2, Monitor, Wrench, Compass, Zap, PenTool, Car, BrickWall, Droplets } from 'lucide-react';
+import { ArrowRight, FileText, Calculator, ShoppingCart, Building2, Monitor, Compass, Zap, PenTool, Car, BrickWall, Droplets } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const categories = [

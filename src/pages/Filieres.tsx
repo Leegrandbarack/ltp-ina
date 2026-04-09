@@ -1,4 +1,4 @@
-import { Monitor, Zap, Wrench, Building2, Calculator, ShoppingCart, FileText, Compass, Car, BrickWall, CheckCircle, ArrowRight, Droplets, PenTool } from 'lucide-react';
+import { Monitor, Zap, Building2, Calculator, ShoppingCart, FileText, Compass, Car, BrickWall, CheckCircle, ArrowRight, Droplets, PenTool } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
