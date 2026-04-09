@@ -15,6 +15,7 @@ import VieScolaire from "./pages/VieScolaire";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 
 const queryClient = new QueryClient();
@@ -28,7 +29,7 @@ const App = () => (
         <Routes>
           {/* Admin routes (no Layout) */}
           <Route path="/admin" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
 
           {/* Public routes */}
           <Route path="/" element={<Layout><Index /></Layout>} />
