@@ -14,8 +14,7 @@ const categories = [
       { icon: BrickWall, name: 'Construction Bâtiment (CB)' },
       { icon: Car, name: 'Mécanique Auto (MA)' },
       { icon: Compass, name: 'Opérateur-Géomètre (OG)' },
-      { icon: PenTool, name: 'Menuiserie' },
-      { icon: Wrench, name: 'Mécanique générale' },
+      { icon: PenTool, name: 'OBB (Ouvrage Bois & Bâtiment)' },
     ],
   },
   {
