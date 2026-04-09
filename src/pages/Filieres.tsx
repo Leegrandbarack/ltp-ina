@@ -1,4 +1,4 @@
-import { Monitor, Zap, Wrench, Building2, Calculator, ShoppingCart, FileText, Compass, Car, BrickWall, CheckCircle, ArrowRight, Droplets, PenTool } from 'lucide-react';
+import { Monitor, Zap, Building2, Calculator, ShoppingCart, FileText, Compass, Car, BrickWall, CheckCircle, ArrowRight, Droplets, PenTool } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
@@ -60,17 +60,10 @@ const categories = [
       },
       {
         icon: PenTool,
-        title: 'Menuiserie',
-        description: "Travail du bois, fabrication de meubles, charpente et finitions.",
-        competences: ['Travail du bois', 'Fabrication de meubles', 'Charpente', 'Finitions'],
-        debouches: ['Menuisier', 'Ébéniste', 'Charpentier'],
-      },
-      {
-        icon: Wrench,
-        title: 'Mécanique générale',
-        description: "Mécanique générale, usinage, soudure et maintenance d'équipements.",
-        competences: ['Mécanique générale', 'Soudure', 'Usinage', 'Maintenance'],
-        debouches: ['Mécanicien industriel', 'Soudeur', 'Technicien de maintenance'],
+        title: 'Ouvrage en Bois et en Bâtiment (OBB)',
+        description: "Fabrication et pose d'ouvrages en bois pour le bâtiment : charpente, menuiserie, coffrage et agencement.",
+        competences: ['Charpente bois', 'Menuiserie du bâtiment', 'Coffrage', 'Agencement intérieur'],
+        debouches: ['Menuisier du bâtiment', 'Charpentier', 'Coffreur bois'],
       },
     ],
   },

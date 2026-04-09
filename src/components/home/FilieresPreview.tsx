@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, FileText, Calculator, ShoppingCart, Building2, Monitor, Wrench, Compass, Zap, PenTool, Car, BrickWall, Droplets } from 'lucide-react';
+import { ArrowRight, FileText, Calculator, ShoppingCart, Building2, Monitor, Compass, Zap, PenTool, Car, BrickWall, Droplets } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const categories = [
@@ -14,8 +14,7 @@ const categories = [
       { icon: BrickWall, name: 'Construction Bâtiment (CB)' },
       { icon: Car, name: 'Mécanique Auto (MA)' },
       { icon: Compass, name: 'Opérateur-Géomètre (OG)' },
-      { icon: PenTool, name: 'Menuiserie' },
-      { icon: Wrench, name: 'Mécanique générale' },
+      { icon: PenTool, name: 'OBB (Ouvrage Bois & Bâtiment)' },
     ],
   },
   {
