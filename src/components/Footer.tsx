@@ -49,10 +49,10 @@ const Footer = () => {
               <li className="text-primary-foreground/70">Secrétariat (G1)</li>
               <li className="text-primary-foreground/70">Comptabilité (G2)</li>
               <li className="text-primary-foreground/70">Commerce (G3)</li>
-              <li className="text-primary-foreground/70">Génie Civil (F4)</li>
+              <li className="text-primary-foreground/70">Électrotechnique (F3)</li>
               <li className="text-primary-foreground/70">IMI – Informatique</li>
+              <li className="text-primary-foreground/70">OBB – Ouvrage Bois & Bâtiment</li>
               <li className="text-primary-foreground/70">Mécanique Auto</li>
-              <li className="text-primary-foreground/70">Électricité</li>
             </ul>
           </div>
 
