@@ -1,26 +1,40 @@
-import { useState } from 'react';
-import { X } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { Loader2, X } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
-const categories = ['Toutes', 'Infrastructures', 'Ateliers', 'Cérémonies', 'Vie scolaire'];
-
-const images = [
-  { src: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&q=80', alt: 'Bâtiment administratif du LTP INA', category: 'Infrastructures' },
-  { src: 'https://images.unsplash.com/photo-1562774053-701939374585?w=600&q=80', alt: 'Vue d\'ensemble du campus', category: 'Infrastructures' },
-  { src: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&q=80', alt: 'Atelier de mécanique', category: 'Ateliers' },
-  { src: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80', alt: 'Laboratoire informatique – filière IMI', category: 'Ateliers' },
-  { src: 'https://images.unsplash.com/photo-1588072432836-e10032774350?w=600&q=80', alt: 'Travaux pratiques en atelier', category: 'Ateliers' },
-  { src: 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&q=80', alt: 'Cérémonie de remise des diplômes 2024', category: 'Cérémonies' },
-  { src: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80', alt: 'Élèves en salle de cours', category: 'Vie scolaire' },
-  { src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80', alt: 'Journée portes ouvertes', category: 'Vie scolaire' },
-  { src: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&q=80', alt: 'Activités sportives', category: 'Vie scolaire' },
-  { src: 'https://images.unsplash.com/photo-1523050854058-8df90110c476?w=600&q=80', alt: 'Cérémonie de rentrée scolaire', category: 'Cérémonies' },
-];
+type GalleryImage = {
+  id: string;
+  title: string;
+  image_url: string;
+  category: string | null;
+};
 
 const Galerie = () => {
   const ref = useScrollAnimation();
   const [activeCategory, setActiveCategory] = useState('Toutes');
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const [images, setImages] = useState<GalleryImage[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from('gallery_images')
+        .select('id,title,image_url,category')
+        .eq('published', true)
+        .order('sort_order', { ascending: true })
+        .order('created_at', { ascending: false });
+      setImages(data || []);
+      setLoading(false);
+    })();
+  }, []);
+
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    images.forEach((i) => i.category && set.add(i.category));
+    return ['Toutes', ...Array.from(set)];
+  }, [images]);
 
   const filtered = activeCategory === 'Toutes' ? images : images.filter((img) => img.category === activeCategory);
 
@@ -37,44 +51,57 @@ const Galerie = () => {
 
       <section className="section-padding">
         <div className="container-custom">
-          <div className="flex justify-center gap-2 mb-10 flex-wrap animate-on-scroll">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-5 py-2 rounded-full font-body text-sm font-medium transition-all duration-300 ${
-                  activeCategory === cat
-                    ? 'bg-primary text-primary-foreground shadow-card'
-                    : 'bg-secondary text-secondary-foreground hover:bg-primary/10'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filtered.map((img, i) => (
-              <div
-                key={img.alt + i}
-                className="relative overflow-hidden rounded-xl cursor-pointer group animate-on-scroll aspect-square"
-                style={{ transitionDelay: `${i * 60}ms` }}
-                onClick={() => setLightbox(img.src)}
-              >
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/40 transition-colors duration-300 flex items-end">
-                  <p className="text-primary-foreground font-body text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-3 pb-3">
-                    {img.alt}
-                  </p>
+          {loading ? (
+            <div className="flex justify-center py-20">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+          ) : images.length === 0 ? (
+            <p className="text-center text-muted-foreground font-body py-20">
+              Aucune image disponible pour le moment.
+            </p>
+          ) : (
+            <>
+              {categories.length > 1 && (
+                <div className="flex justify-center gap-2 mb-10 flex-wrap">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setActiveCategory(cat)}
+                      className={`px-5 py-2 rounded-full font-body text-sm font-medium transition-all duration-300 ${
+                        activeCategory === cat
+                          ? 'bg-primary text-primary-foreground shadow-card'
+                          : 'bg-secondary text-secondary-foreground hover:bg-primary/10'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
                 </div>
+              )}
+
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {filtered.map((img) => (
+                  <div
+                    key={img.id}
+                    className="relative overflow-hidden rounded-xl cursor-pointer group aspect-square"
+                    onClick={() => setLightbox(img.image_url)}
+                  >
+                    <img
+                      src={img.image_url}
+                      alt={img.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/40 transition-colors duration-300 flex items-end">
+                      <p className="text-primary-foreground font-body text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-3 pb-3">
+                        {img.title}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          )}
         </div>
       </section>
 
