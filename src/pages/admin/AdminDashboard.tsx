@@ -8,8 +8,8 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import {
-  GraduationCap, LogOut, Plus, Pencil, Trash2, Newspaper, FileText,
-  Loader2, X, Home, LayoutDashboard, Users, CalendarDays
+  GraduationCap, LogOut, Plus, Pencil, Trash2, Newspaper, FileText, Image as ImageIcon,
+  Loader2, X, Home, LayoutDashboard, Users, CalendarDays, Upload
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -34,11 +34,24 @@ type Document = {
   created_at: string;
 };
 
+type GalleryImage = {
+  id: string;
+  title: string;
+  image_url: string;
+  category: string | null;
+  published: boolean | null;
+  sort_order: number | null;
+  created_at: string;
+};
+
+type Tab = 'dashboard' | 'actualites' | 'documents' | 'galerie';
+
 const AdminDashboard = () => {
   const { user, loading: authLoading, logout } = useAdminAuth();
-  const [tab, setTab] = useState<'dashboard' | 'actualites' | 'documents'>('dashboard');
+  const [tab, setTab] = useState<Tab>('dashboard');
   const [actualites, setActualites] = useState<Actualite[]>([]);
   const [documents, setDocuments] = useState<Document[]>([]);
+  const [gallery, setGallery] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Form states
@@ -48,20 +61,23 @@ const AdminDashboard = () => {
   const [formContent, setFormContent] = useState('');
   const [formExcerpt, setFormExcerpt] = useState('');
   const [formCategory, setFormCategory] = useState('general');
-  const [formPublished, setFormPublished] = useState(false);
+  const [formPublished, setFormPublished] = useState(true);
   const [formImageUrl, setFormImageUrl] = useState('');
+  const [formImageFile, setFormImageFile] = useState<File | null>(null);
   const [formDescription, setFormDescription] = useState('');
   const [formFile, setFormFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
 
   const fetchData = async () => {
     setLoading(true);
-    const [actRes, docRes] = await Promise.all([
+    const [actRes, docRes, galRes] = await Promise.all([
       supabase.from('actualites').select('*').order('created_at', { ascending: false }),
       supabase.from('documents').select('*').order('created_at', { ascending: false }),
+      supabase.from('gallery_images').select('*').order('created_at', { ascending: false }),
     ]);
     if (actRes.data) setActualites(actRes.data);
     if (docRes.data) setDocuments(docRes.data);
+    if (galRes.data) setGallery(galRes.data);
     setLoading(false);
   };
 
@@ -76,12 +92,26 @@ const AdminDashboard = () => {
     setFormContent('');
     setFormExcerpt('');
     setFormCategory('general');
-    setFormPublished(false);
+    setFormPublished(true);
     setFormImageUrl('');
+    setFormImageFile(null);
     setFormDescription('');
     setFormFile(null);
   };
 
+  const uploadToGalleryBucket = async (file: File): Promise<string | null> => {
+    const ext = file.name.split('.').pop();
+    const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    const { error } = await supabase.storage.from('gallery').upload(path, file);
+    if (error) {
+      toast.error("Erreur lors de l'upload de l'image.");
+      return null;
+    }
+    const { data } = supabase.storage.from('gallery').getPublicUrl(path);
+    return data.publicUrl;
+  };
+
+  // ========== ACTUALITES ==========
   const handleEditActualite = (a: Actualite) => {
     setTab('actualites');
     setEditingId(a.id);
@@ -89,8 +119,9 @@ const AdminDashboard = () => {
     setFormContent(a.content);
     setFormExcerpt(a.excerpt || '');
     setFormCategory(a.category || 'general');
-    setFormPublished(a.published || false);
+    setFormPublished(a.published ?? true);
     setFormImageUrl(a.image_url || '');
+    setFormImageFile(null);
     setShowForm(true);
   };
 
@@ -100,13 +131,21 @@ const AdminDashboard = () => {
       return;
     }
     setSaving(true);
+
+    let imageUrl = formImageUrl.trim() || null;
+    if (formImageFile) {
+      const uploaded = await uploadToGalleryBucket(formImageFile);
+      if (!uploaded) { setSaving(false); return; }
+      imageUrl = uploaded;
+    }
+
     const payload = {
       title: formTitle.trim(),
       content: formContent.trim(),
       excerpt: formExcerpt.trim() || null,
       category: formCategory,
       published: formPublished,
-      image_url: formImageUrl.trim() || null,
+      image_url: imageUrl,
       author_id: user?.id,
     };
 
@@ -131,13 +170,14 @@ const AdminDashboard = () => {
     else { toast.success('Actualité supprimée.'); fetchData(); }
   };
 
+  // ========== DOCUMENTS ==========
   const handleEditDocument = (d: Document) => {
     setTab('documents');
     setEditingId(d.id);
     setFormTitle(d.title);
     setFormDescription(d.description || '');
     setFormCategory(d.category || 'general');
-    setFormPublished(d.published || false);
+    setFormPublished(d.published ?? true);
     setShowForm(true);
   };
 
@@ -189,7 +229,7 @@ const AdminDashboard = () => {
         published: formPublished,
         author_id: user?.id,
       });
-      if (error) toast.error('Erreur lors de l\'ajout.');
+      if (error) toast.error("Erreur lors de l'ajout.");
       else toast.success('Document ajouté.');
     }
     setSaving(false);
@@ -202,6 +242,72 @@ const AdminDashboard = () => {
     const { error } = await supabase.from('documents').delete().eq('id', id);
     if (error) toast.error('Erreur lors de la suppression.');
     else { toast.success('Document supprimé.'); fetchData(); }
+  };
+
+  // ========== GALLERY ==========
+  const handleEditGallery = (g: GalleryImage) => {
+    setTab('galerie');
+    setEditingId(g.id);
+    setFormTitle(g.title);
+    setFormCategory(g.category || 'general');
+    setFormPublished(g.published ?? true);
+    setFormImageUrl(g.image_url);
+    setFormImageFile(null);
+    setShowForm(true);
+  };
+
+  const handleSaveGallery = async () => {
+    if (!formTitle.trim()) {
+      toast.error('Le titre est obligatoire.');
+      return;
+    }
+
+    setSaving(true);
+    let imageUrl = formImageUrl.trim();
+
+    if (formImageFile) {
+      const uploaded = await uploadToGalleryBucket(formImageFile);
+      if (!uploaded) { setSaving(false); return; }
+      imageUrl = uploaded;
+    }
+
+    if (!imageUrl) {
+      toast.error("Veuillez fournir une image (upload ou URL).");
+      setSaving(false);
+      return;
+    }
+
+    if (editingId) {
+      const { error } = await supabase.from('gallery_images').update({
+        title: formTitle.trim(),
+        category: formCategory,
+        published: formPublished,
+        image_url: imageUrl,
+      }).eq('id', editingId);
+      if (error) toast.error('Erreur lors de la modification.');
+      else toast.success('Image modifiée.');
+    } else {
+      const { error } = await supabase.from('gallery_images').insert({
+        title: formTitle.trim(),
+        category: formCategory,
+        published: formPublished,
+        image_url: imageUrl,
+        author_id: user?.id,
+      });
+      if (error) toast.error("Erreur lors de l'ajout.");
+      else toast.success('Image ajoutée.');
+    }
+
+    setSaving(false);
+    resetForm();
+    fetchData();
+  };
+
+  const handleDeleteGallery = async (id: string) => {
+    if (!confirm('Supprimer cette image ?')) return;
+    const { error } = await supabase.from('gallery_images').delete().eq('id', id);
+    if (error) toast.error('Erreur lors de la suppression.');
+    else { toast.success('Image supprimée.'); fetchData(); }
   };
 
   if (authLoading) {
@@ -218,7 +324,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-muted/30">
-      {/* Header */}
       <header className="bg-card border-b border-border sticky top-0 z-40">
         <div className="container-custom flex items-center justify-between h-14 px-4">
           <div className="flex items-center gap-3">
@@ -241,7 +346,6 @@ const AdminDashboard = () => {
       </header>
 
       <div className="container-custom px-4 py-8 max-w-5xl">
-        {/* Welcome */}
         <div className="bg-card rounded-xl border border-border/50 p-6 mb-8 shadow-soft">
           <h1 className="font-display text-xl font-bold text-foreground mb-1">
             Bienvenue dans l'espace administration
@@ -251,32 +355,21 @@ const AdminDashboard = () => {
           </p>
         </div>
 
-        {/* Navigation tabs */}
         <div className="flex gap-2 mb-6 flex-wrap">
-          <Button
-            variant={tab === 'dashboard' ? 'default' : 'outline'}
-            size="sm"
-            onClick={() => { setTab('dashboard'); resetForm(); }}
-          >
+          <Button variant={tab === 'dashboard' ? 'default' : 'outline'} size="sm" onClick={() => { setTab('dashboard'); resetForm(); }}>
             <LayoutDashboard className="w-4 h-4 mr-1" /> Tableau de bord
           </Button>
-          <Button
-            variant={tab === 'actualites' ? 'default' : 'outline'}
-            size="sm"
-            onClick={() => { setTab('actualites'); resetForm(); }}
-          >
+          <Button variant={tab === 'actualites' ? 'default' : 'outline'} size="sm" onClick={() => { setTab('actualites'); resetForm(); }}>
             <Newspaper className="w-4 h-4 mr-1" /> Actualités ({actualites.length})
           </Button>
-          <Button
-            variant={tab === 'documents' ? 'default' : 'outline'}
-            size="sm"
-            onClick={() => { setTab('documents'); resetForm(); }}
-          >
+          <Button variant={tab === 'galerie' ? 'default' : 'outline'} size="sm" onClick={() => { setTab('galerie'); resetForm(); }}>
+            <ImageIcon className="w-4 h-4 mr-1" /> Galerie ({gallery.length})
+          </Button>
+          <Button variant={tab === 'documents' ? 'default' : 'outline'} size="sm" onClick={() => { setTab('documents'); resetForm(); }}>
             <FileText className="w-4 h-4 mr-1" /> Documents ({documents.length})
           </Button>
         </div>
 
-        {/* Dashboard tab */}
         {tab === 'dashboard' && (
           <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -297,6 +390,19 @@ const AdminDashboard = () => {
 
               <div className="bg-card rounded-xl border border-border/50 p-5 shadow-soft">
                 <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <ImageIcon className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-display font-bold text-foreground">{gallery.length}</p>
+                    <p className="text-muted-foreground font-body text-xs">Images de galerie</p>
+                  </div>
+                </div>
+                <p className="text-xs font-body text-muted-foreground">{gallery.filter(g => g.published).length} visibles</p>
+              </div>
+
+              <div className="bg-card rounded-xl border border-border/50 p-5 shadow-soft">
+                <div className="flex items-center gap-3 mb-3">
                   <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
                     <FileText className="w-5 h-5 text-accent" />
                   </div>
@@ -305,22 +411,7 @@ const AdminDashboard = () => {
                     <p className="text-muted-foreground font-body text-xs">Documents</p>
                   </div>
                 </div>
-                <p className="text-xs font-body text-muted-foreground">
-                  {publishedDocuments.length} publié(s)
-                </p>
-              </div>
-
-              <div className="bg-card rounded-xl border border-border/50 p-5 shadow-soft">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-lg bg-secondary/50 flex items-center justify-center">
-                    <Users className="w-5 h-5 text-foreground" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-display font-bold text-foreground">1</p>
-                    <p className="text-muted-foreground font-body text-xs">Administrateur</p>
-                  </div>
-                </div>
-                <p className="text-xs font-body text-muted-foreground">Compte actif</p>
+                <p className="text-xs font-body text-muted-foreground">{publishedDocuments.length} publié(s)</p>
               </div>
 
               <div className="bg-card rounded-xl border border-border/50 p-5 shadow-soft">
@@ -335,11 +426,10 @@ const AdminDashboard = () => {
                     <p className="text-muted-foreground font-body text-xs">Date du jour</p>
                   </div>
                 </div>
-                <p className="text-xs font-body text-muted-foreground">Dernière connexion</p>
+                <p className="text-xs font-body text-muted-foreground">Session active</p>
               </div>
             </div>
 
-            {/* Recent items */}
             <div className="bg-card rounded-xl border border-border/50 p-6 shadow-soft">
               <h2 className="font-display font-bold text-foreground mb-4">Dernières actualités</h2>
               {actualites.length === 0 ? (
@@ -365,13 +455,12 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        {/* Actualites / Documents tabs */}
-        {(tab === 'actualites' || tab === 'documents') && (
+        {(tab === 'actualites' || tab === 'documents' || tab === 'galerie') && (
           <>
             {!showForm && (
               <Button onClick={() => setShowForm(true)} className="mb-6">
                 <Plus className="w-4 h-4 mr-1" />
-                {tab === 'actualites' ? 'Nouvelle actualité' : 'Nouveau document'}
+                {tab === 'actualites' ? 'Nouvelle actualité' : tab === 'galerie' ? 'Nouvelle image' : 'Nouveau document'}
               </Button>
             )}
 
@@ -379,7 +468,8 @@ const AdminDashboard = () => {
               <div className="bg-card rounded-xl border border-border/50 p-6 mb-6 shadow-soft">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="font-display font-bold text-foreground">
-                    {editingId ? 'Modifier' : 'Ajouter'} {tab === 'actualites' ? 'une actualité' : 'un document'}
+                    {editingId ? 'Modifier' : 'Ajouter'}{' '}
+                    {tab === 'actualites' ? 'une actualité' : tab === 'galerie' ? 'une image' : 'un document'}
                   </h2>
                   <Button variant="ghost" size="sm" onClick={resetForm}>
                     <X className="w-4 h-4" />
@@ -392,7 +482,7 @@ const AdminDashboard = () => {
                     <Input value={formTitle} onChange={(e) => setFormTitle(e.target.value)} placeholder="Titre" />
                   </div>
 
-                  {tab === 'actualites' ? (
+                  {tab === 'actualites' && (
                     <>
                       <div>
                         <Label className="font-body text-sm">Résumé (optionnel)</Label>
@@ -403,11 +493,20 @@ const AdminDashboard = () => {
                         <Textarea value={formContent} onChange={(e) => setFormContent(e.target.value)} placeholder="Contenu de l'actualité..." rows={6} />
                       </div>
                       <div>
-                        <Label className="font-body text-sm">URL de l'image (optionnel)</Label>
+                        <Label className="font-body text-sm">Image — uploader un fichier</Label>
+                        <Input type="file" accept="image/*" onChange={(e) => setFormImageFile(e.target.files?.[0] || null)} />
+                      </div>
+                      <div>
+                        <Label className="font-body text-sm">…ou URL d'image</Label>
                         <Input value={formImageUrl} onChange={(e) => setFormImageUrl(e.target.value)} placeholder="https://..." />
                       </div>
+                      {formImageUrl && !formImageFile && (
+                        <img src={formImageUrl} alt="Aperçu" className="rounded-lg max-h-40 object-cover border border-border" />
+                      )}
                     </>
-                  ) : (
+                  )}
+
+                  {tab === 'documents' && (
                     <>
                       <div>
                         <Label className="font-body text-sm">Description (optionnel)</Label>
@@ -420,9 +519,25 @@ const AdminDashboard = () => {
                     </>
                   )}
 
+                  {tab === 'galerie' && (
+                    <>
+                      <div>
+                        <Label className="font-body text-sm">Image — uploader un fichier</Label>
+                        <Input type="file" accept="image/*" onChange={(e) => setFormImageFile(e.target.files?.[0] || null)} />
+                      </div>
+                      <div>
+                        <Label className="font-body text-sm">…ou URL d'image</Label>
+                        <Input value={formImageUrl} onChange={(e) => setFormImageUrl(e.target.value)} placeholder="https://..." />
+                      </div>
+                      {formImageUrl && !formImageFile && (
+                        <img src={formImageUrl} alt="Aperçu" className="rounded-lg max-h-40 object-cover border border-border" />
+                      )}
+                    </>
+                  )}
+
                   <div>
                     <Label className="font-body text-sm">Catégorie</Label>
-                    <Input value={formCategory} onChange={(e) => setFormCategory(e.target.value)} placeholder="general" />
+                    <Input value={formCategory} onChange={(e) => setFormCategory(e.target.value)} placeholder={tab === 'galerie' ? 'Infrastructures, Ateliers, Cérémonies...' : 'general'} />
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -430,8 +545,15 @@ const AdminDashboard = () => {
                     <Label className="font-body text-sm">Publié (visible sur le site)</Label>
                   </div>
 
-                  <Button onClick={tab === 'actualites' ? handleSaveActualite : handleSaveDocument} disabled={saving}>
-                    {saving ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : null}
+                  <Button
+                    onClick={
+                      tab === 'actualites' ? handleSaveActualite
+                      : tab === 'galerie' ? handleSaveGallery
+                      : handleSaveDocument
+                    }
+                    disabled={saving}
+                  >
+                    {saving ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : <Upload className="w-4 h-4 mr-1" />}
                     {editingId ? 'Enregistrer' : 'Publier'}
                   </Button>
                 </div>
@@ -445,17 +567,22 @@ const AdminDashboard = () => {
                 {actualites.length === 0 && <p className="text-muted-foreground font-body text-sm text-center py-8">Aucune actualité pour le moment.</p>}
                 {actualites.map((a) => (
                   <div key={a.id} className="bg-card rounded-lg border border-border/50 p-4 flex items-start justify-between gap-4">
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-display font-bold text-foreground text-sm truncate">{a.title}</h3>
-                        <span className={`text-xs px-2 py-0.5 rounded-full font-body ${a.published ? 'bg-accent/20 text-accent' : 'bg-muted text-muted-foreground'}`}>
-                          {a.published ? 'Publié' : 'Brouillon'}
-                        </span>
+                    <div className="min-w-0 flex items-start gap-3">
+                      {a.image_url && (
+                        <img src={a.image_url} alt="" className="w-14 h-14 rounded object-cover shrink-0" />
+                      )}
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                          <h3 className="font-display font-bold text-foreground text-sm truncate">{a.title}</h3>
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-body ${a.published ? 'bg-accent/20 text-accent' : 'bg-muted text-muted-foreground'}`}>
+                            {a.published ? 'Publié' : 'Brouillon'}
+                          </span>
+                        </div>
+                        <p className="text-muted-foreground font-body text-xs">
+                          {new Date(a.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                          {a.category && a.category !== 'general' ? ` · ${a.category}` : ''}
+                        </p>
                       </div>
-                      <p className="text-muted-foreground font-body text-xs">
-                        {new Date(a.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
-                        {a.category && a.category !== 'general' ? ` · ${a.category}` : ''}
-                      </p>
                     </div>
                     <div className="flex gap-1 shrink-0">
                       <Button variant="ghost" size="sm" onClick={() => handleEditActualite(a)}>
@@ -464,6 +591,36 @@ const AdminDashboard = () => {
                       <Button variant="ghost" size="sm" onClick={() => handleDeleteActualite(a.id)} className="text-destructive hover:text-destructive">
                         <Trash2 className="w-3.5 h-3.5" />
                       </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : tab === 'galerie' ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {gallery.length === 0 && <p className="text-muted-foreground font-body text-sm text-center py-8 col-span-full">Aucune image dans la galerie.</p>}
+                {gallery.map((g) => (
+                  <div key={g.id} className="bg-card rounded-lg border border-border/50 overflow-hidden group">
+                    <div className="relative aspect-square">
+                      <img src={g.image_url} alt={g.title} className="w-full h-full object-cover" />
+                      {!g.published && (
+                        <span className="absolute top-2 left-2 text-xs px-2 py-0.5 rounded-full font-body bg-muted text-muted-foreground">
+                          Brouillon
+                        </span>
+                      )}
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-body font-semibold text-foreground text-sm truncate">{g.title}</h3>
+                      {g.category && g.category !== 'general' && (
+                        <p className="text-muted-foreground font-body text-xs mb-2">{g.category}</p>
+                      )}
+                      <div className="flex gap-1 justify-end">
+                        <Button variant="ghost" size="sm" onClick={() => handleEditGallery(g)}>
+                          <Pencil className="w-3.5 h-3.5" />
+                        </Button>
+                        <Button variant="ghost" size="sm" onClick={() => handleDeleteGallery(g.id)} className="text-destructive hover:text-destructive">
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 ))}
