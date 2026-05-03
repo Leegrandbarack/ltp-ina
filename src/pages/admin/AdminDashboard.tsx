@@ -758,6 +758,42 @@ const AdminDashboard = () => {
                   </div>
                 ))}
               </div>
+            ) : tab === 'filieres' ? (
+              <div className="space-y-3">
+                {filieres.length === 0 && <p className="text-muted-foreground font-body text-sm text-center py-8">Aucune filière pour le moment.</p>}
+                {filieres.map((f) => {
+                  const Icon = getFiliereIcon(f.icon);
+                  return (
+                    <div key={f.id} className="bg-card rounded-lg border border-border/50 p-4 flex items-start justify-between gap-4">
+                      <div className="min-w-0 flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                          <Icon className="w-5 h-5 text-primary" />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2 mb-1 flex-wrap">
+                            <h3 className="font-display font-bold text-foreground text-sm truncate">{f.title}</h3>
+                            <span className={`text-xs px-2 py-0.5 rounded-full font-body ${f.published ? 'bg-accent/20 text-accent' : 'bg-muted text-muted-foreground'}`}>
+                              {f.published ? 'Publiée' : 'Brouillon'}
+                            </span>
+                            <span className="text-xs px-2 py-0.5 rounded-full font-body bg-muted text-muted-foreground">
+                              {f.category === 'cap' ? 'CAP' : 'Spécifique'}
+                            </span>
+                          </div>
+                          <p className="text-muted-foreground font-body text-xs line-clamp-2">{f.description}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-1 shrink-0">
+                        <Button variant="ghost" size="sm" onClick={() => handleEditFiliere(f)}>
+                          <Pencil className="w-3.5 h-3.5" />
+                        </Button>
+                        <Button variant="ghost" size="sm" onClick={() => handleDeleteFiliere(f.id)} className="text-destructive hover:text-destructive">
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             ) : (
               <div className="space-y-3">
                 {documents.length === 0 && <p className="text-muted-foreground font-body text-sm text-center py-8">Aucun document pour le moment.</p>}
