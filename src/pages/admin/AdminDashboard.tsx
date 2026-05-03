@@ -117,6 +117,10 @@ const AdminDashboard = () => {
     setFormImageFile(null);
     setFormDescription('');
     setFormFile(null);
+    setFormCompetences('');
+    setFormDebouches('');
+    setFormIcon('GraduationCap');
+    setFormFiliereCategory('cap');
   };
 
   const uploadToGalleryBucket = async (file: File): Promise<string | null> => {
