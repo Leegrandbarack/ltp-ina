@@ -65,6 +65,7 @@ const AdminDashboard = () => {
   const [actualites, setActualites] = useState<Actualite[]>([]);
   const [documents, setDocuments] = useState<Document[]>([]);
   const [gallery, setGallery] = useState<GalleryImage[]>([]);
+  const [filieres, setFilieres] = useState<Filiere[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Form states
@@ -79,18 +80,24 @@ const AdminDashboard = () => {
   const [formImageFile, setFormImageFile] = useState<File | null>(null);
   const [formDescription, setFormDescription] = useState('');
   const [formFile, setFormFile] = useState<File | null>(null);
+  const [formCompetences, setFormCompetences] = useState('');
+  const [formDebouches, setFormDebouches] = useState('');
+  const [formIcon, setFormIcon] = useState('GraduationCap');
+  const [formFiliereCategory, setFormFiliereCategory] = useState<'cap' | 'specifique'>('cap');
   const [saving, setSaving] = useState(false);
 
   const fetchData = async () => {
     setLoading(true);
-    const [actRes, docRes, galRes] = await Promise.all([
+    const [actRes, docRes, galRes, filRes] = await Promise.all([
       supabase.from('actualites').select('*').order('created_at', { ascending: false }),
       supabase.from('documents').select('*').order('created_at', { ascending: false }),
       supabase.from('gallery_images').select('*').order('created_at', { ascending: false }),
+      supabase.from('filieres').select('*').order('sort_order', { ascending: true }),
     ]);
     if (actRes.data) setActualites(actRes.data);
     if (docRes.data) setDocuments(docRes.data);
     if (galRes.data) setGallery(galRes.data);
+    if (filRes.data) setFilieres(filRes.data as Filiere[]);
     setLoading(false);
   };
 
