@@ -45,7 +45,19 @@ type GalleryImage = {
   created_at: string;
 };
 
-type Tab = 'dashboard' | 'actualites' | 'documents' | 'galerie';
+type Filiere = {
+  id: string;
+  title: string;
+  description: string;
+  competences: string[];
+  debouches: string[];
+  category: string;
+  icon: string;
+  sort_order: number;
+  published: boolean;
+};
+
+type Tab = 'dashboard' | 'actualites' | 'documents' | 'galerie' | 'filieres';
 
 const AdminDashboard = () => {
   const { user, loading: authLoading, logout } = useAdminAuth();
