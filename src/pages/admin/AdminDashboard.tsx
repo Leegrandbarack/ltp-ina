@@ -547,12 +547,12 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        {(tab === 'actualites' || tab === 'documents' || tab === 'galerie') && (
+        {(tab === 'actualites' || tab === 'documents' || tab === 'galerie' || tab === 'filieres') && (
           <>
             {!showForm && (
               <Button onClick={() => setShowForm(true)} className="mb-6">
                 <Plus className="w-4 h-4 mr-1" />
-                {tab === 'actualites' ? 'Nouvelle actualité' : tab === 'galerie' ? 'Nouvelle image' : 'Nouveau document'}
+                {tab === 'actualites' ? 'Nouvelle actualité' : tab === 'galerie' ? 'Nouvelle image' : tab === 'filieres' ? 'Nouvelle filière' : 'Nouveau document'}
               </Button>
             )}
 
