@@ -561,7 +561,7 @@ const AdminDashboard = () => {
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="font-display font-bold text-foreground">
                     {editingId ? 'Modifier' : 'Ajouter'}{' '}
-                    {tab === 'actualites' ? 'une actualité' : tab === 'galerie' ? 'une image' : 'un document'}
+                    {tab === 'actualites' ? 'une actualité' : tab === 'galerie' ? 'une image' : tab === 'filieres' ? 'une filière' : 'un document'}
                   </h2>
                   <Button variant="ghost" size="sm" onClick={resetForm}>
                     <X className="w-4 h-4" />
