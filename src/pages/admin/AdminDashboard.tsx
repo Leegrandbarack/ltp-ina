@@ -334,6 +334,71 @@ const AdminDashboard = () => {
     else { toast.success('Image supprimée.'); fetchData(); }
   };
 
+  // ========== FILIERES ==========
+  const handleEditFiliere = (f: Filiere) => {
+    setTab('filieres');
+    setEditingId(f.id);
+    setFormTitle(f.title);
+    setFormDescription(f.description || '');
+    setFormCompetences((f.competences || []).join('\n'));
+    setFormDebouches((f.debouches || []).join('\n'));
+    setFormIcon(f.icon || 'GraduationCap');
+    setFormFiliereCategory((f.category as 'cap' | 'specifique') || 'cap');
+    setFormPublished(f.published ?? true);
+    setShowForm(true);
+  };
+
+  const handleSaveFiliere = async () => {
+    if (!formTitle.trim()) {
+      toast.error('Le titre est obligatoire.');
+      return;
+    }
+    setSaving(true);
+    const competences = formCompetences.split('\n').map(s => s.trim()).filter(Boolean);
+    const debouches = formDebouches.split('\n').map(s => s.trim()).filter(Boolean);
+
+    const payload = {
+      title: formTitle.trim(),
+      description: formDescription.trim(),
+      competences,
+      debouches,
+      category: formFiliereCategory,
+      icon: formIcon,
+      published: formPublished,
+    };
+
+    if (editingId) {
+      // Optimistic update
+      setFilieres(prev => prev.map(x => x.id === editingId ? { ...x, ...payload } as Filiere : x));
+      const { error } = await supabase.from('filieres').update(payload).eq('id', editingId);
+      if (error) { toast.error('Erreur lors de la modification.'); fetchData(); }
+      else toast.success('Filière modifiée.');
+    } else {
+      const maxOrder = filieres.reduce((m, f) => Math.max(m, f.sort_order || 0), 0);
+      const { data, error } = await supabase.from('filieres').insert({
+        ...payload,
+        sort_order: maxOrder + 1,
+        author_id: user?.id,
+      }).select().single();
+      if (error) toast.error("Erreur lors de l'ajout.");
+      else {
+        toast.success('Filière publiée.');
+        if (data) setFilieres(prev => [...prev, data as Filiere].sort((a, b) => a.sort_order - b.sort_order));
+      }
+    }
+    setSaving(false);
+    resetForm();
+  };
+
+  const handleDeleteFiliere = async (id: string) => {
+    if (!confirm('Supprimer cette filière ?')) return;
+    const previous = filieres;
+    setFilieres(prev => prev.filter(f => f.id !== id));
+    const { error } = await supabase.from('filieres').delete().eq('id', id);
+    if (error) { toast.error('Erreur lors de la suppression.'); setFilieres(previous); }
+    else toast.success('Filière supprimée.');
+  };
+
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-muted/30">
