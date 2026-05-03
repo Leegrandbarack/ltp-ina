@@ -9,9 +9,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import {
   GraduationCap, LogOut, Plus, Pencil, Trash2, Newspaper, FileText, Image as ImageIcon,
-  Loader2, X, Home, LayoutDashboard, Users, CalendarDays, Upload
+  Loader2, X, Home, LayoutDashboard, CalendarDays, Upload, BookOpen
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { FILIERE_ICON_NAMES, getFiliereIcon } from '@/lib/filiereIcons';
 
 type Actualite = {
   id: string;
