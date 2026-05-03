@@ -448,6 +448,9 @@ const AdminDashboard = () => {
           <Button variant={tab === 'dashboard' ? 'default' : 'outline'} size="sm" onClick={() => { setTab('dashboard'); resetForm(); }}>
             <LayoutDashboard className="w-4 h-4 mr-1" /> Tableau de bord
           </Button>
+          <Button variant={tab === 'filieres' ? 'default' : 'outline'} size="sm" onClick={() => { setTab('filieres'); resetForm(); }}>
+            <BookOpen className="w-4 h-4 mr-1" /> Filières ({filieres.length})
+          </Button>
           <Button variant={tab === 'actualites' ? 'default' : 'outline'} size="sm" onClick={() => { setTab('actualites'); resetForm(); }}>
             <Newspaper className="w-4 h-4 mr-1" /> Actualités ({actualites.length})
           </Button>
