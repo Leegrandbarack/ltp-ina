@@ -627,10 +627,50 @@ const AdminDashboard = () => {
                     </>
                   )}
 
-                  <div>
-                    <Label className="font-body text-sm">Catégorie</Label>
-                    <Input value={formCategory} onChange={(e) => setFormCategory(e.target.value)} placeholder={tab === 'galerie' ? 'Infrastructures, Ateliers, Cérémonies...' : 'general'} />
-                  </div>
+                  {tab === 'filieres' && (
+                    <>
+                      <div>
+                        <Label className="font-body text-sm">Description courte</Label>
+                        <Textarea value={formDescription} onChange={(e) => setFormDescription(e.target.value)} placeholder="Description de la filière..." rows={3} />
+                      </div>
+                      <div>
+                        <Label className="font-body text-sm">Compétences (une par ligne)</Label>
+                        <Textarea value={formCompetences} onChange={(e) => setFormCompetences(e.target.value)} placeholder={'Compétence 1\nCompétence 2'} rows={4} />
+                      </div>
+                      <div>
+                        <Label className="font-body text-sm">Débouchés (un par ligne)</Label>
+                        <Textarea value={formDebouches} onChange={(e) => setFormDebouches(e.target.value)} placeholder={'Métier 1\nMétier 2'} rows={4} />
+                      </div>
+                      <div>
+                        <Label className="font-body text-sm">Catégorie</Label>
+                        <select
+                          value={formFiliereCategory}
+                          onChange={(e) => setFormFiliereCategory(e.target.value as 'cap' | 'specifique')}
+                          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                        >
+                          <option value="cap">Filière menant au CAP</option>
+                          <option value="specifique">Filière spécifique (sans CAP)</option>
+                        </select>
+                      </div>
+                      <div>
+                        <Label className="font-body text-sm">Icône</Label>
+                        <select
+                          value={formIcon}
+                          onChange={(e) => setFormIcon(e.target.value)}
+                          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                        >
+                          {FILIERE_ICON_NAMES.map(n => <option key={n} value={n}>{n}</option>)}
+                        </select>
+                      </div>
+                    </>
+                  )}
+
+                  {tab !== 'filieres' && (
+                    <div>
+                      <Label className="font-body text-sm">Catégorie</Label>
+                      <Input value={formCategory} onChange={(e) => setFormCategory(e.target.value)} placeholder={tab === 'galerie' ? 'Infrastructures, Ateliers, Cérémonies...' : 'general'} />
+                    </div>
+                  )}
 
                   <div className="flex items-center gap-2">
                     <Switch checked={formPublished} onCheckedChange={setFormPublished} />
@@ -641,6 +681,7 @@ const AdminDashboard = () => {
                     onClick={
                       tab === 'actualites' ? handleSaveActualite
                       : tab === 'galerie' ? handleSaveGallery
+                      : tab === 'filieres' ? handleSaveFiliere
                       : handleSaveDocument
                     }
                     disabled={saving}
