@@ -89,6 +89,51 @@ export type Database = {
         }
         Relationships: []
       }
+      filieres: {
+        Row: {
+          author_id: string | null
+          category: string
+          competences: string[]
+          created_at: string
+          debouches: string[]
+          description: string
+          icon: string
+          id: string
+          published: boolean
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          category?: string
+          competences?: string[]
+          created_at?: string
+          debouches?: string[]
+          description?: string
+          icon?: string
+          id?: string
+          published?: boolean
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          category?: string
+          competences?: string[]
+          created_at?: string
+          debouches?: string[]
+          description?: string
+          icon?: string
+          id?: string
+          published?: boolean
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       gallery_images: {
         Row: {
           author_id: string | null

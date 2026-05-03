@@ -9,9 +9,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import {
   GraduationCap, LogOut, Plus, Pencil, Trash2, Newspaper, FileText, Image as ImageIcon,
-  Loader2, X, Home, LayoutDashboard, Users, CalendarDays, Upload
+  Loader2, X, Home, LayoutDashboard, CalendarDays, Upload, BookOpen
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { FILIERE_ICON_NAMES, getFiliereIcon } from '@/lib/filiereIcons';
 
 type Actualite = {
   id: string;
@@ -44,7 +45,19 @@ type GalleryImage = {
   created_at: string;
 };
 
-type Tab = 'dashboard' | 'actualites' | 'documents' | 'galerie';
+type Filiere = {
+  id: string;
+  title: string;
+  description: string;
+  competences: string[];
+  debouches: string[];
+  category: string;
+  icon: string;
+  sort_order: number;
+  published: boolean;
+};
+
+type Tab = 'dashboard' | 'actualites' | 'documents' | 'galerie' | 'filieres';
 
 const AdminDashboard = () => {
   const { user, loading: authLoading, logout } = useAdminAuth();
@@ -52,6 +65,7 @@ const AdminDashboard = () => {
   const [actualites, setActualites] = useState<Actualite[]>([]);
   const [documents, setDocuments] = useState<Document[]>([]);
   const [gallery, setGallery] = useState<GalleryImage[]>([]);
+  const [filieres, setFilieres] = useState<Filiere[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Form states
@@ -66,18 +80,24 @@ const AdminDashboard = () => {
   const [formImageFile, setFormImageFile] = useState<File | null>(null);
   const [formDescription, setFormDescription] = useState('');
   const [formFile, setFormFile] = useState<File | null>(null);
+  const [formCompetences, setFormCompetences] = useState('');
+  const [formDebouches, setFormDebouches] = useState('');
+  const [formIcon, setFormIcon] = useState('GraduationCap');
+  const [formFiliereCategory, setFormFiliereCategory] = useState<'cap' | 'specifique'>('cap');
   const [saving, setSaving] = useState(false);
 
   const fetchData = async () => {
     setLoading(true);
-    const [actRes, docRes, galRes] = await Promise.all([
+    const [actRes, docRes, galRes, filRes] = await Promise.all([
       supabase.from('actualites').select('*').order('created_at', { ascending: false }),
       supabase.from('documents').select('*').order('created_at', { ascending: false }),
       supabase.from('gallery_images').select('*').order('created_at', { ascending: false }),
+      supabase.from('filieres').select('*').order('sort_order', { ascending: true }),
     ]);
     if (actRes.data) setActualites(actRes.data);
     if (docRes.data) setDocuments(docRes.data);
     if (galRes.data) setGallery(galRes.data);
+    if (filRes.data) setFilieres(filRes.data as Filiere[]);
     setLoading(false);
   };
 
@@ -97,6 +117,10 @@ const AdminDashboard = () => {
     setFormImageFile(null);
     setFormDescription('');
     setFormFile(null);
+    setFormCompetences('');
+    setFormDebouches('');
+    setFormIcon('GraduationCap');
+    setFormFiliereCategory('cap');
   };
 
   const uploadToGalleryBucket = async (file: File): Promise<string | null> => {
@@ -310,6 +334,71 @@ const AdminDashboard = () => {
     else { toast.success('Image supprimée.'); fetchData(); }
   };
 
+  // ========== FILIERES ==========
+  const handleEditFiliere = (f: Filiere) => {
+    setTab('filieres');
+    setEditingId(f.id);
+    setFormTitle(f.title);
+    setFormDescription(f.description || '');
+    setFormCompetences((f.competences || []).join('\n'));
+    setFormDebouches((f.debouches || []).join('\n'));
+    setFormIcon(f.icon || 'GraduationCap');
+    setFormFiliereCategory((f.category as 'cap' | 'specifique') || 'cap');
+    setFormPublished(f.published ?? true);
+    setShowForm(true);
+  };
+
+  const handleSaveFiliere = async () => {
+    if (!formTitle.trim()) {
+      toast.error('Le titre est obligatoire.');
+      return;
+    }
+    setSaving(true);
+    const competences = formCompetences.split('\n').map(s => s.trim()).filter(Boolean);
+    const debouches = formDebouches.split('\n').map(s => s.trim()).filter(Boolean);
+
+    const payload = {
+      title: formTitle.trim(),
+      description: formDescription.trim(),
+      competences,
+      debouches,
+      category: formFiliereCategory,
+      icon: formIcon,
+      published: formPublished,
+    };
+
+    if (editingId) {
+      // Optimistic update
+      setFilieres(prev => prev.map(x => x.id === editingId ? { ...x, ...payload } as Filiere : x));
+      const { error } = await supabase.from('filieres').update(payload).eq('id', editingId);
+      if (error) { toast.error('Erreur lors de la modification.'); fetchData(); }
+      else toast.success('Filière modifiée.');
+    } else {
+      const maxOrder = filieres.reduce((m, f) => Math.max(m, f.sort_order || 0), 0);
+      const { data, error } = await supabase.from('filieres').insert({
+        ...payload,
+        sort_order: maxOrder + 1,
+        author_id: user?.id,
+      }).select().single();
+      if (error) toast.error("Erreur lors de l'ajout.");
+      else {
+        toast.success('Filière publiée.');
+        if (data) setFilieres(prev => [...prev, data as Filiere].sort((a, b) => a.sort_order - b.sort_order));
+      }
+    }
+    setSaving(false);
+    resetForm();
+  };
+
+  const handleDeleteFiliere = async (id: string) => {
+    if (!confirm('Supprimer cette filière ?')) return;
+    const previous = filieres;
+    setFilieres(prev => prev.filter(f => f.id !== id));
+    const { error } = await supabase.from('filieres').delete().eq('id', id);
+    if (error) { toast.error('Erreur lors de la suppression.'); setFilieres(previous); }
+    else toast.success('Filière supprimée.');
+  };
+
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-muted/30">
@@ -358,6 +447,9 @@ const AdminDashboard = () => {
         <div className="flex gap-2 mb-6 flex-wrap">
           <Button variant={tab === 'dashboard' ? 'default' : 'outline'} size="sm" onClick={() => { setTab('dashboard'); resetForm(); }}>
             <LayoutDashboard className="w-4 h-4 mr-1" /> Tableau de bord
+          </Button>
+          <Button variant={tab === 'filieres' ? 'default' : 'outline'} size="sm" onClick={() => { setTab('filieres'); resetForm(); }}>
+            <BookOpen className="w-4 h-4 mr-1" /> Filières ({filieres.length})
           </Button>
           <Button variant={tab === 'actualites' ? 'default' : 'outline'} size="sm" onClick={() => { setTab('actualites'); resetForm(); }}>
             <Newspaper className="w-4 h-4 mr-1" /> Actualités ({actualites.length})
@@ -455,12 +547,12 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        {(tab === 'actualites' || tab === 'documents' || tab === 'galerie') && (
+        {(tab === 'actualites' || tab === 'documents' || tab === 'galerie' || tab === 'filieres') && (
           <>
             {!showForm && (
               <Button onClick={() => setShowForm(true)} className="mb-6">
                 <Plus className="w-4 h-4 mr-1" />
-                {tab === 'actualites' ? 'Nouvelle actualité' : tab === 'galerie' ? 'Nouvelle image' : 'Nouveau document'}
+                {tab === 'actualites' ? 'Nouvelle actualité' : tab === 'galerie' ? 'Nouvelle image' : tab === 'filieres' ? 'Nouvelle filière' : 'Nouveau document'}
               </Button>
             )}
 
@@ -469,7 +561,7 @@ const AdminDashboard = () => {
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="font-display font-bold text-foreground">
                     {editingId ? 'Modifier' : 'Ajouter'}{' '}
-                    {tab === 'actualites' ? 'une actualité' : tab === 'galerie' ? 'une image' : 'un document'}
+                    {tab === 'actualites' ? 'une actualité' : tab === 'galerie' ? 'une image' : tab === 'filieres' ? 'une filière' : 'un document'}
                   </h2>
                   <Button variant="ghost" size="sm" onClick={resetForm}>
                     <X className="w-4 h-4" />
@@ -535,10 +627,50 @@ const AdminDashboard = () => {
                     </>
                   )}
 
-                  <div>
-                    <Label className="font-body text-sm">Catégorie</Label>
-                    <Input value={formCategory} onChange={(e) => setFormCategory(e.target.value)} placeholder={tab === 'galerie' ? 'Infrastructures, Ateliers, Cérémonies...' : 'general'} />
-                  </div>
+                  {tab === 'filieres' && (
+                    <>
+                      <div>
+                        <Label className="font-body text-sm">Description courte</Label>
+                        <Textarea value={formDescription} onChange={(e) => setFormDescription(e.target.value)} placeholder="Description de la filière..." rows={3} />
+                      </div>
+                      <div>
+                        <Label className="font-body text-sm">Compétences (une par ligne)</Label>
+                        <Textarea value={formCompetences} onChange={(e) => setFormCompetences(e.target.value)} placeholder={'Compétence 1\nCompétence 2'} rows={4} />
+                      </div>
+                      <div>
+                        <Label className="font-body text-sm">Débouchés (un par ligne)</Label>
+                        <Textarea value={formDebouches} onChange={(e) => setFormDebouches(e.target.value)} placeholder={'Métier 1\nMétier 2'} rows={4} />
+                      </div>
+                      <div>
+                        <Label className="font-body text-sm">Catégorie</Label>
+                        <select
+                          value={formFiliereCategory}
+                          onChange={(e) => setFormFiliereCategory(e.target.value as 'cap' | 'specifique')}
+                          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                        >
+                          <option value="cap">Filière menant au CAP</option>
+                          <option value="specifique">Filière spécifique (sans CAP)</option>
+                        </select>
+                      </div>
+                      <div>
+                        <Label className="font-body text-sm">Icône</Label>
+                        <select
+                          value={formIcon}
+                          onChange={(e) => setFormIcon(e.target.value)}
+                          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                        >
+                          {FILIERE_ICON_NAMES.map(n => <option key={n} value={n}>{n}</option>)}
+                        </select>
+                      </div>
+                    </>
+                  )}
+
+                  {tab !== 'filieres' && (
+                    <div>
+                      <Label className="font-body text-sm">Catégorie</Label>
+                      <Input value={formCategory} onChange={(e) => setFormCategory(e.target.value)} placeholder={tab === 'galerie' ? 'Infrastructures, Ateliers, Cérémonies...' : 'general'} />
+                    </div>
+                  )}
 
                   <div className="flex items-center gap-2">
                     <Switch checked={formPublished} onCheckedChange={setFormPublished} />
@@ -549,6 +681,7 @@ const AdminDashboard = () => {
                     onClick={
                       tab === 'actualites' ? handleSaveActualite
                       : tab === 'galerie' ? handleSaveGallery
+                      : tab === 'filieres' ? handleSaveFiliere
                       : handleSaveDocument
                     }
                     disabled={saving}
@@ -624,6 +757,42 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+            ) : tab === 'filieres' ? (
+              <div className="space-y-3">
+                {filieres.length === 0 && <p className="text-muted-foreground font-body text-sm text-center py-8">Aucune filière pour le moment.</p>}
+                {filieres.map((f) => {
+                  const Icon = getFiliereIcon(f.icon);
+                  return (
+                    <div key={f.id} className="bg-card rounded-lg border border-border/50 p-4 flex items-start justify-between gap-4">
+                      <div className="min-w-0 flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                          <Icon className="w-5 h-5 text-primary" />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2 mb-1 flex-wrap">
+                            <h3 className="font-display font-bold text-foreground text-sm truncate">{f.title}</h3>
+                            <span className={`text-xs px-2 py-0.5 rounded-full font-body ${f.published ? 'bg-accent/20 text-accent' : 'bg-muted text-muted-foreground'}`}>
+                              {f.published ? 'Publiée' : 'Brouillon'}
+                            </span>
+                            <span className="text-xs px-2 py-0.5 rounded-full font-body bg-muted text-muted-foreground">
+                              {f.category === 'cap' ? 'CAP' : 'Spécifique'}
+                            </span>
+                          </div>
+                          <p className="text-muted-foreground font-body text-xs line-clamp-2">{f.description}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-1 shrink-0">
+                        <Button variant="ghost" size="sm" onClick={() => handleEditFiliere(f)}>
+                          <Pencil className="w-3.5 h-3.5" />
+                        </Button>
+                        <Button variant="ghost" size="sm" onClick={() => handleDeleteFiliere(f.id)} className="text-destructive hover:text-destructive">
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             ) : (
               <div className="space-y-3">
